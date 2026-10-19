@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CELPIP-General — Simulated Test (Pacific Edition)</title>
+<style>
+:root{
+  --blue:#1f4e79; --blue2:#2f6aa8; --teal:#16a085; --teal-d:#0e7c66;
+  --ink:#24313f; --mut:#6a7788; --line:#e3e9f1; --bg:#eef2f8; --card:#ffffff;
+  --good:#1a8f55; --good-bg:#eafaf1; --bad:#c0392b; --bad-bg:#fdecea;
+  --warn:#b7791f; --warn-bg:#fdf6e8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.55;font-size:15.5px}
+a{color:var(--blue2)}
+/* top bar */
+header{position:sticky;top:0;z-index:50;background:linear-gradient(100deg,var(--blue),var(--blue2));
+  color:#fff;box-shadow:0 2px 10px rgba(20,40,70,.18)}
+.bar{max-width:980px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:.3px;font-size:18px;display:flex;align-items:center;gap:8px}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(22,160,133,.3)}
+.brand small{font-weight:600;opacity:.85;font-size:12px;letter-spacing:.2px}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:8px;padding:7px 12px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+nav button:hover{background:rgba(255,255,255,.24)}
+nav button.active{background:#fff;color:var(--blue)}
+.tgl{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;cursor:pointer;
+  background:rgba(255,255,255,.12);padding:6px 10px;border-radius:8px}
+.tgl input{accent-color:var(--teal);width:15px;height:15px}
+main{max-width:980px;margin:0 auto;padding:22px 18px 80px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:0 0 18px;
+  box-shadow:0 1px 4px rgba(30,50,80,.05)}
+h1{font-size:25px;margin:0 0 6px;color:var(--blue)}
+h2{font-size:20px;margin:0 0 4px;color:var(--blue)}
+.lead{color:var(--mut);margin:.2em 0 0}
+.band{background:var(--blue);color:#fff;border-radius:10px;padding:9px 15px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.4px;font-size:14px;margin:0 0 14px;display:flex;
+  align-items:center;gap:10px;justify-content:space-between}
+.band .pill{background:rgba(255,255,255,.22);padding:2px 10px;border-radius:20px;font-size:11.5px;letter-spacing:.3px}
+.sub{color:var(--teal-d);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.4px;margin:2px 0 8px}
+.part-ctx{background:#f4f8fc;border-left:4px solid var(--blue2);border-radius:0 8px 8px 0;padding:9px 14px;
+  color:#3a4a5a;font-size:14px;margin:0 0 14px}
+.part-ctx b{color:var(--blue)}
+.muted{color:var(--mut)}
+.small{font-size:12.5px}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+/* buttons */
+.btn{background:var(--teal);color:#fff;border:0;border-radius:9px;padding:10px 16px;font-size:14.5px;
+  font-weight:700;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--teal-d)}
+.btn.sec{background:#eef2f8;color:var(--blue);border:1px solid var(--line)}
+.btn.sec:hover{background:#e3ebf5}
+.btn.blue{background:var(--blue2)} .btn.blue:hover{background:var(--blue)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sm{padding:6px 11px;font-size:12.5px;border-radius:7px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* home grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:6px}
+.mod{border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;cursor:pointer;background:#fff;
+  transition:.15s;position:relative;overflow:hidden}
+.mod:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,50,80,.10)}
+.mod .ic{font-size:26px}
+.mod h3{margin:8px 0 2px;font-size:17px;color:var(--blue)}
+.mod p{margin:0;color:var(--mut);font-size:13px}
+.mod .edge{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--teal)}
+/* questions */
+.q{border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin:0 0 12px;background:#fff}
+.q .qh{font-weight:700;margin:0 0 9px;display:flex;gap:9px}
+.q .qn{color:#fff;background:var(--blue2);min-width:26px;height:26px;border-radius:7px;display:inline-flex;
+  align-items:center;justify-content:center;font-size:13px;flex:none}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 11px;border:1px solid var(--line);border-radius:9px;
+  margin:6px 0;cursor:pointer;transition:.12s;font-size:14.5px}
+.opt:hover{background:#f6f9fd;border-color:#c9d8ea}
+.opt input{margin-top:3px;accent-color:var(--teal);width:16px;height:16px;flex:none}
+.opt .lt{font-weight:700;color:var(--blue2);flex:none}
+.opt.correct{background:var(--good-bg);border-color:#9fe0bf}
+.opt.wrong{background:var(--bad-bg);border-color:#f2b8b1}
+.expl{margin:8px 0 0;font-size:13px;background:var(--good-bg);border-left:3px solid var(--good);
+  border-radius:0 7px 7px 0;padding:8px 12px;color:#245c3d}
+.expl.hidden,.key.hidden{display:none}
+.key{font-size:12.5px;color:var(--good);font-weight:700;margin-top:6px}
+/* reading passage */
+.email,.passage,.article,.diagram{background:#fbfcfe;border:1px solid var(--line);border-radius:11px;
+  padding:16px 18px;margin:0 0 16px;font-size:14.5px}
+.email .meta{color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}
+.email p,.passage p,.article p{margin:0 0 10px}
+.passage .para{display:flex;gap:12px;margin:0 0 12px}
+.passage .plabel{font-weight:800;color:var(--teal-d);background:#e8f6f1;border-radius:7px;width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.inlineblank{display:inline-block;margin:2px 3px}
+.inlineblank select{font-size:14px;padding:4px 8px;border:2px solid var(--blue2);border-radius:7px;background:#fff;
+  color:var(--blue);font-weight:600}
+.inlineblank.correct select{border-color:var(--good);background:var(--good-bg)}
+.inlineblank.wrong select{border-color:var(--bad);background:var(--bad-bg)}
+.bexpl{font-size:12.5px;color:#245c3d;background:var(--good-bg);border-radius:7px;padding:6px 10px;margin:6px 0;
+  border-left:3px solid var(--good)}
+.dtable{width:100%;border-collapse:collapse;font-size:14px}
+.dtable td{border:1px solid var(--line);padding:8px 11px;vertical-align:top}
+.dtable td:first-child{font-weight:700;color:var(--blue);width:34%;background:#f4f8fc}
+/* audio player */
+.player{background:linear-gradient(100deg,#13334f,#1f4e79);color:#fff;border-radius:12px;padding:15px 18px;margin:0 0 14px}
+.player .pt{font-weight:700;display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.player .wave{display:flex;gap:3px;align-items:flex-end;height:20px}
+.player .wave i{width:3px;background:var(--teal);height:6px;border-radius:2px;animation:w 1s infinite ease-in-out}
+.player.playing .wave i{animation-play-state:running}
+.player .wave i:nth-child(2){animation-delay:.1s}.player .wave i:nth-child(3){animation-delay:.2s}
+.player .wave i:nth-child(4){animation-delay:.3s}.player .wave i:nth-child(5){animation-delay:.15s}
+@keyframes w{0%,100%{height:5px}50%{height:19px}}
+.player .wave.off i{animation:none;height:5px}
+.player .ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.player button{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:8px;padding:8px 13px;
+  font-weight:700;cursor:pointer;font-size:13.5px}
+.player button:hover{background:rgba(255,255,255,.3)}
+.player .speed{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12.5px;opacity:.9}
+.player input[type=range]{accent-color:var(--teal)}
+.player .note{font-size:11.5px;opacity:.8;margin-top:9px}
+.transcript{font-size:13.5px;background:#fbfcfe;border:1px dashed #c9d8ea;border-radius:10px;padding:12px 15px;margin:10px 0}
+.transcript .ln{margin:4px 0}.transcript .sp{font-weight:800;color:var(--blue2)}
+.transcript.hidden{display:none}
+/* timer */
+.timerbar{display:flex;align-items:center;gap:14px;background:#f4f8fc;border:1px solid var(--line);
+  border-radius:10px;padding:10px 15px;margin:0 0 14px;flex-wrap:wrap}
+.clock{font-variant-numeric:tabular-nums;font-weight:800;font-size:22px;color:var(--blue)}
+.clock.warn{color:var(--bad)}
+.wc{color:var(--mut);font-size:13px;font-weight:600}
+textarea{width:100%;min-height:230px;border:1px solid var(--line);border-radius:11px;padding:13px 15px;
+  font-size:15px;font-family:inherit;line-height:1.6;resize:vertical}
+textarea:focus{outline:2px solid var(--blue2);border-color:var(--blue2)}
+.model{background:#f6f9fd;border:1px solid #d9e6f3;border-radius:11px;padding:14px 17px;margin:10px 0;
+  white-space:pre-wrap;font-size:14.5px;line-height:1.65}
+.model .mlbl{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-d);
+  margin-bottom:7px;display:block}
+.anal{background:var(--good-bg);border-left:3px solid var(--good);border-radius:0 8px 8px 0;padding:10px 14px;
+  margin:8px 0 0;font-size:13.5px}
+.anal b{color:#0f5c31}
+.anal div{margin:3px 0}
+.collapse.hidden{display:none}
+.scene{display:block;margin:0 auto 12px;max-width:520px;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}
+.opts2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.opts2 .ob{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fbfcfe}
+.opts2 .ob b{color:var(--blue)}
+@media(max-width:640px){.opts2{grid-template-columns:1fr}.passage .para{flex-direction:column;gap:6px}}
+/* results */
+.scorebox{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.scorebox .sc{border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;background:#fbfcfe}
+.scorebox .big{font-size:40px;font-weight:800;color:var(--blue)}
+.scorebox .lvl{font-size:15px;color:var(--teal-d);font-weight:800;margin-top:4px}
+.scorebox .den{color:var(--mut);font-size:13px}
+.badge{display:inline-block;background:var(--teal);color:#fff;border-radius:20px;padding:2px 11px;font-size:12px;
+  font-weight:700;margin-left:6px}
+.hide{display:none!important}
+.tip{font-size:12.5px;color:var(--warn);background:var(--warn-bg);border-left:3px solid #e3b566;
+  border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0}
+footer{max-width:980px;margin:0 auto;padding:0 18px 40px;color:var(--mut);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand"><span class="dot"></span>CELPIP-General <small>Simulated Test · Pacific Edition</small></div>
+    <nav id="nav"></nav>
+    <label class="tgl" title="Modo professor: mostra respostas, explicações e transcrições">
+      <input type="checkbox" id="teacher"> 🔑 Professor
+    </label>
+  </div>
+</header>
+<main id="app"></main>
+<footer>
+  Simulado original de prática para fins de estudo. Formato CELPIP-General (Listening · Reading · Writing · Speaking).
+  O áudio do Listening é gerado pela síntese de voz do seu navegador. Este material não é afiliado à Prometric/Paragon.
+</footer>
+<script>
+const DATA = {"listening": [{"part": 1, "name": "Listening to Problem Solving", "qcount": 8, "intro": "You will hear a conversation between two coworkers. The conversation is in three parts. After each part, you will answer some questions. You will hear the conversation one time only.", "context": "Daniel is preparing slides for an important client meeting, but his laptop keeps shutting down. He asks his coworker Priya for help.", "sections": [{"label": "Part 1 of 3", "lines": [["M", "Priya, do you have a minute? My laptop just shut itself off again — that's the third time this morning, and the client presentation is at two o'clock."], ["W", "Oh no. Is it giving you any warning before it happens?"], ["M", "Not really. The screen freezes for a second, the fan gets really loud, and then it just goes black. I've already lost two slides I hadn't saved."], ["W", "That loud fan is a clue. It sounds like it's overheating. Where have you been working — at your desk, or somewhere else?"], ["M", "I was in the small meeting room earlier. It's pretty warm in there, and I had the laptop sitting on a cushioned chair while I rehearsed."], ["W", "That's probably the problem. A soft surface blocks the vents underneath, so the heat has nowhere to go. Let's get it back on a hard desk first."]]}, {"label": "Part 2 of 3", "lines": [["W", "Okay, it's on the desk now. Let me feel the bottom — wow, that is hot. I'd turn it off completely for ten minutes and let it cool down before you touch the settings."], ["M", "Ten minutes? The meeting's in an hour and I still have four slides to build."], ["W", "I know it feels like a lot, but if it overheats during the presentation it'll be far worse. While it cools, why don't you finish the slides on my spare laptop? I'll log you into the shared drive."], ["M", "That would actually save me. Are you sure you don't need it?"], ["W", "I'm in workshops until noon, so it's all yours. One more thing — when yours comes back on, open the system monitor and check what's using the processor. A stuck program can heat it up even on a desk."], ["M", "Good idea. Last week that photo-editing app kept running in the background after I closed it."]]}, {"label": "Part 3 of 3", "lines": [["W", "So here's the plan. Build the last slides on my laptop now, let yours cool, then move everything to the shared drive so you can present from whichever machine is stable."], ["M", "Makes sense. And for the meeting itself?"], ["W", "Present from mine, to be safe. Keep yours shut down as a backup until the IT team can look at the fan. I'd book them for this afternoon — tell them it overheats and shuts down under load."], ["M", "Will do. Honestly, I was about to panic twenty minutes ago."], ["W", "You're fine. The slides are the real deadline; the laptop is just a tool. Go — you've got a meeting to win."]]}], "questions": [{"q": "Why does Daniel first approach Priya?", "options": ["His laptop keeps shutting down before an important meeting", "He cannot find the client's presentation file", "He wants Priya to attend the meeting with him", "He needs help logging into the shared drive"], "answer": 0, "expl": "Logo no início Daniel diz que o laptop desligou três vezes e que a reunião é às 14h — o problema é o desligamento, não o arquivo."}, {"q": "What does Priya identify as the likely cause of the problem?", "options": ["A virus running in the background", "The laptop overheating", "A broken power cable", "Too many slides in the file"], "answer": 1, "expl": "O barulho do ventilador e a base quente levam Priya a concluir que o laptop está superaquecendo (overheating)."}, {"q": "Why was working in the meeting room part of the problem?", "options": ["The internet connection there was weak", "The room was warm and the laptop sat on a soft surface that blocked the vents", "There were too many people using the room", "The electrical outlet was faulty"], "answer": 1, "expl": "Priya explica que a sala era quente e a superfície macia (a cadeira estofada) bloqueava as saídas de ar embaixo."}, {"q": "What does Priya suggest doing first?", "options": ["Turning the laptop off to let it cool down", "Reinstalling the presentation software", "Calling the client to postpone the meeting", "Buying a cooling fan"], "answer": 0, "expl": "Ela recomenda desligar completamente por dez minutos para esfriar antes de mexer em qualquer configuração."}, {"q": "How does Priya help Daniel finish his slides on time?", "options": ["She finishes the slides for him", "She lets him use her spare laptop while his cools down", "She cancels her workshops to help", "She prints the slides as a backup"], "answer": 1, "expl": "Priya oferece seu laptop reserva, pois estará em workshops até o meio-dia."}, {"q": "What does Priya tell Daniel to check once his laptop restarts?", "options": ["Whether the battery is fully charged", "Which program is using the processor", "If the latest updates are installed", "How much storage space is left"], "answer": 1, "expl": "Ela manda abrir o monitor do sistema e ver o que está usando o processador — um programa travado aquece a máquina."}, {"q": "What is the final plan for the presentation itself?", "options": ["Daniel will present from Priya's laptop to be safe", "Daniel will present from his own laptop", "The meeting will be moved to the next day", "IT will run the presentation remotely"], "answer": 0, "expl": "Priya diz para apresentar do laptop dela por segurança e manter o de Daniel desligado como reserva."}, {"q": "What does Priya's final comment mainly suggest about her attitude?", "options": ["She is annoyed that Daniel interrupted her", "She is worried the meeting will fail", "She is reassuring and keeps the situation in perspective", "She is unsure whether the plan will work"], "answer": 2, "expl": "Ela tranquiliza Daniel ('You're fine', 'go win a meeting') e relativiza: o prazo real são os slides, o laptop é só ferramenta."}]}, {"part": 2, "name": "Listening to a Daily Life Conversation", "qcount": 5, "intro": "You will hear a conversation between two people. After the conversation, you will answer some questions. You will hear the conversation one time only.", "context": "A couple, Marcus and Lena, are planning a weekend camping trip.", "sections": [{"label": null, "lines": [["W", "So I finally got through to the park office about the long weekend. The good news is there's still a site left at Cedar Point. The not-so-good news is it's a walk-in site — no parking right beside the tent."], ["M", "A walk-in? How far is the carry from the lot?"], ["W", "About three hundred metres, mostly flat. It's actually one of the quieter sites because of that, right near the water."], ["M", "Honestly, I'll take quiet over convenient. Last year the site next to the parking lot had cars coming and going until midnight. Let's book it."], ["W", "Done. Now, the forecast says sunny Saturday but a good chance of rain Sunday afternoon. I think we should put the tarp up over the tent as soon as we arrive, before we do anything else."], ["M", "Agreed. I'd rather set up dry than scramble in the rain. What about food? Are we doing the cooler again?"], ["W", "Yes, but let's freeze the water bottles this time instead of buying ice. They keep everything cold and then we have cold drinking water as they melt."], ["M", "Smart. I'll handle the gear — tent, tarp, stove, chairs. Can you take care of the food and the permits?"], ["W", "Sure. Oh, and remember the fire ban might still be on. I'll check the park website Friday night. If it is, we'll need the camp stove for everything, so bring extra fuel."], ["M", "Good catch. No point packing marshmallows if we can't have a fire."], ["W", "We can still toast them over the stove — it's not the same, but it works. Let's aim to leave by eight on Saturday to beat the traffic."]]}], "questions": [{"q": "What is the main disadvantage of the campsite they book?", "options": ["It is far from the water", "You cannot park right next to it", "It is very expensive", "It has no washroom nearby"], "answer": 1, "expl": "É um 'walk-in site': o carro fica a ~300 m, sem estacionamento ao lado da barraca."}, {"q": "Why does Marcus prefer this site despite the drawback?", "options": ["It is cheaper than the others", "It is closer to the park entrance", "It is quieter than sites near the parking lot", "It has a better view of the forest"], "answer": 2, "expl": "Ele prefere sossego: no ano anterior o site perto do estacionamento teve carros até meia-noite."}, {"q": "What do they decide to do first when they arrive?", "options": ["Start cooking dinner", "Put up the tarp over the tent", "Go for a swim", "Collect firewood"], "answer": 1, "expl": "Por causa da chuva prevista para domingo, decidem montar o tarp sobre a barraca antes de qualquer coisa."}, {"q": "Why does Lena suggest freezing water bottles?", "options": ["To save money on bottled water", "To keep food cold and provide cold drinking water as they melt", "Because ice is not allowed in the park", "To make the cooler lighter to carry"], "answer": 1, "expl": "As garrafas congeladas substituem o gelo e, ao derreter, viram água potável gelada."}, {"q": "What will Lena check on the park website on Friday night?", "options": ["Whether the site is still available", "Whether there is a fire ban", "The weekend weather forecast", "The cost of the permits"], "answer": 1, "expl": "Ela vai verificar se a proibição de fogueira (fire ban) continua; se sim, levarão combustível extra para o fogareiro."}]}, {"part": 3, "name": "Listening for Information", "qcount": 6, "intro": "You will hear a conversation in which one person gives another person information. After the conversation, you will answer some questions. You will hear the conversation one time only.", "context": "A library staff member, Omar, explains the library's new Makerspace to a visitor, Rachel.", "sections": [{"label": null, "lines": [["W", "Hi, I saw a poster about a Makerspace opening here. I didn't even know libraries did that kind of thing."], ["M", "A lot of them do now. Our Makerspace is on the second floor, and it's basically a room full of tools and equipment that anyone with a library card can use for free."], ["W", "Free? What kind of equipment are we talking about?"], ["M", "The most popular is the 3D printer, but we also have a sewing machine, a vinyl cutter for making stickers and labels, and a small recording booth for podcasts or music."], ["W", "That's amazing. So could I just walk in and start using the 3D printer today?"], ["M", "Almost. The one rule is that for the 3D printer and the recording booth, you need to take a short safety and training session first — it's about forty-five minutes. After that, you can book either one online."], ["W", "Does the training cost anything?"], ["M", "No, it's free, but spaces are limited, so you do have to sign up in advance. We run it twice a week, Tuesday evenings and Saturday mornings."], ["W", "And the materials? Like the plastic for the printer?"], ["M", "For small projects, the plastic is covered by the library. For anything larger than about the size of a coffee mug, we ask you to bring your own spool or pay a small materials fee — it's fifteen cents a gram."], ["W", "Got it. What about the sewing machine and the vinyl cutter?"], ["M", "Those two you can use any time the Makerspace is open, no training needed. Just bring your own fabric or vinyl. We supply the thread and the basic blades."], ["W", "This is going to be so useful. One last thing — what are the hours?"], ["M", "The Makerspace is open Tuesday to Saturday, ten to six, but it closes an hour earlier than the rest of the library, so last bookings are at five."]]}], "questions": [{"q": "What is the Makerspace, according to Omar?", "options": ["A classroom for computer lessons", "A room of tools and equipment free for library-card holders", "A quiet study area on the second floor", "A shop that sells craft supplies"], "answer": 1, "expl": "Omar descreve como uma sala cheia de ferramentas e equipamentos de uso gratuito para quem tem carteirinha."}, {"q": "Which two pieces of equipment require training before use?", "options": ["The sewing machine and the vinyl cutter", "The 3D printer and the recording booth", "The vinyl cutter and the 3D printer", "The recording booth and the sewing machine"], "answer": 1, "expl": "A sessão de treinamento é obrigatória para a impressora 3D e a cabine de gravação."}, {"q": "What is true about the training session?", "options": ["It costs fifteen dollars", "It is free but requires signing up in advance", "It is only offered once a month", "It lasts about two hours"], "answer": 1, "expl": "É gratuita, dura ~45 min, mas tem vagas limitadas e exige inscrição antecipada (terças à noite e sábados de manhã)."}, {"q": "When does the library charge for 3D-printing plastic?", "options": ["For every project, regardless of size", "Only for projects larger than about a coffee mug", "Only during weekends", "Never — all materials are free"], "answer": 1, "expl": "Projetos pequenos têm plástico incluído; acima do tamanho de uma caneca, traz-se o próprio rolo ou paga-se 15 centavos por grama."}, {"q": "What does a visitor need to bring to use the sewing machine or vinyl cutter?", "options": ["A completed training certificate", "Their own fabric or vinyl", "A booking confirmation", "An extra materials fee"], "answer": 1, "expl": "Essas duas máquinas não exigem treinamento; basta trazer o próprio tecido ou vinil (a biblioteca fornece linha e lâminas básicas)."}, {"q": "What is the last time a person can book equipment?", "options": ["Five o'clock", "Six o'clock", "Ten o'clock", "An hour after the library closes"], "answer": 0, "expl": "O Makerspace fecha uma hora antes do resto da biblioteca (10h–18h), então as últimas reservas são às 17h."}]}, {"part": 4, "name": "Listening to a News Item", "qcount": 5, "intro": "You will hear a news report. After the report, you will answer some questions. You will hear the report one time only.", "context": "A local radio news report about a community project.", "sections": [{"label": null, "lines": [["N", "In local news tonight, a vacant lot that sat empty for nearly a decade on Maple Street has been transformed into one of the city's largest community gardens. The project, led by retired teacher Grace Okonkwo, opened to residents this past weekend. Okonkwo first proposed the idea two years ago, after noticing that families in the neighbourhood had few places to grow their own food. What began as a petition with just thirty signatures grew into a partnership between the city, a local hardware store, and more than two hundred volunteers. The garden now holds eighty raised beds, a tool-lending shed, and a section set aside for schools to use during science lessons. Half of everything grown in the shared beds will be donated to the nearby food bank, which Okonkwo says was the heart of the plan from the start. The city has agreed to cover the water costs for the first three years, after which the garden is expected to fund itself through a small annual membership fee. Residents interested in reserving a bed for next season can add their names to a waiting list at the community centre. Okonkwo says the response has already exceeded every expectation, with the waiting list filling up within a single day."]]}], "questions": [{"q": "What was built on the vacant lot on Maple Street?", "options": ["A new school", "A community garden", "A hardware store", "A food bank"], "answer": 1, "expl": "O terreno vazio virou um dos maiores jardins comunitários da cidade."}, {"q": "Who led the project?", "options": ["A city councillor", "A retired teacher named Grace Okonkwo", "The owner of a hardware store", "A group of local students"], "answer": 1, "expl": "O projeto foi liderado pela professora aposentada Grace Okonkwo."}, {"q": "What will happen to half of the food grown in the shared beds?", "options": ["It will be sold at a market", "It will be donated to the food bank", "It will be given to the volunteers", "It will be used in school lunches"], "answer": 1, "expl": "Metade do que é cultivado nos canteiros compartilhados será doada ao banco de alimentos — o coração do plano."}, {"q": "How will the garden be funded after the first three years?", "options": ["By the city permanently", "Through a small annual membership fee", "By the hardware store", "Through government grants"], "answer": 1, "expl": "A cidade cobre a água por três anos; depois, o jardim se sustentará com uma pequena taxa anual de associação."}, {"q": "What does the report say about the waiting list?", "options": ["It is still mostly empty", "It filled up within a single day", "It is only open to teachers", "It will open next season"], "answer": 1, "expl": "A procura superou as expectativas e a lista de espera se encheu em um único dia."}]}, {"part": 5, "name": "Listening to a Discussion", "qcount": 8, "intro": "You will hear a discussion among three people. After the discussion, you will answer some questions. You will hear the discussion one time only.", "context": "Three neighbours — Tasha, Victor, and Chen — are on a townhouse committee discussing whether to install shared rooftop solar panels for their complex.", "sections": [{"label": null, "lines": [["W", "Thanks for meeting, both of you. So the quote came back: thirty-two thousand dollars to put solar panels on all six rooftops. Split between the units, that's just over five thousand each."], ["M", "Five thousand is a lot up front. I'm not against solar, but a few of the owners are on fixed incomes. That number alone could sink the whole idea."], ["W2", "I hear that, Victor, but there's a rebate we'd qualify for. The provincial program covers about thirty percent, so realistically each unit is closer to thirty-five hundred. And the company offers a payment plan over three years."], ["M", "Okay, thirty-five hundred is more reasonable. But what's the actual payback? When do we stop losing money and start saving it?"], ["W", "The installer estimated the panels would cut our shared electricity bills — the hallway lights, the garage, the water pumps — by about sixty percent. At current rates, the system pays for itself in roughly seven years, and it's warrantied for twenty-five."], ["W2", "So eighteen years of savings after that. And electricity prices only ever seem to go up, so the real payback is probably faster than seven years."], ["M", "That's a fair point. My worry is maintenance. Who climbs up there when a panel cracks or the system throws an error? We're not exactly a team of engineers."], ["W", "Good question. The contract includes monitoring and two free service visits a year. Anything beyond that, there's a maintenance fund we'd build from part of the savings."], ["M", "Now that actually addresses my main concern. I don't mind the technology; I just didn't want surprise bills landing on us every winter."], ["W2", "What about the units that get less sun? The two on the north end are shaded by that big oak."], ["W", "The panels feed one shared system, not individual units, so the savings are split evenly no matter whose roof produces more. Nobody loses out because of a tree."], ["W2", "That's the part I think will win people over. It's genuinely fair — everyone pays the same and everyone saves the same."], ["M", "Alright. I came in skeptical, but the rebate, the warranty, and that maintenance fund change the picture. I'd vote to bring it to the full owners' meeting."], ["W", "Great. Let's each take two units and walk them through the numbers before the vote. If we explain the rebate clearly, I think we have a real shot."]]}], "questions": [{"q": "What decision are the three neighbours discussing?", "options": ["Whether to repaint the townhouse complex", "Whether to install shared rooftop solar panels", "Whether to cut down a large oak tree", "Whether to raise the monthly fees"], "answer": 1, "expl": "O tema é instalar painéis solares compartilhados nos telhados do condomínio."}, {"q": "What is Victor's first concern?", "options": ["The high up-front cost for owners on fixed incomes", "That solar power does not work in winter", "That the roofs are too old", "That the panels are ugly"], "answer": 0, "expl": "Victor teme o custo inicial de ~5 mil por unidade, pois alguns proprietários têm renda fixa."}, {"q": "How does the provincial rebate change the cost per unit?", "options": ["It removes the cost entirely", "It lowers it to roughly $3,500 per unit", "It doubles the savings", "It only applies to one unit"], "answer": 1, "expl": "O programa cobre ~30%, baixando para cerca de 3.500 por unidade, com parcelamento em três anos."}, {"q": "According to the installer, how much could the shared electricity bills be cut?", "options": ["About 30 percent", "About 60 percent", "About 90 percent", "They would not change"], "answer": 1, "expl": "A estimativa é reduzir em ~60% as contas compartilhadas (luzes de corredor, garagem, bombas de água)."}, {"q": "Roughly how long until the system pays for itself?", "options": ["About three years", "About seven years", "About twelve years", "About twenty-five years"], "answer": 1, "expl": "O retorno estimado é em torno de sete anos; a garantia é de 25 anos."}, {"q": "How is the maintenance concern addressed?", "options": ["Owners will take turns repairing the panels", "The contract includes monitoring and two free service visits a year, plus a maintenance fund", "The city will handle all repairs", "There is no plan for maintenance"], "answer": 1, "expl": "O contrato inclui monitoramento e duas visitas gratuitas por ano, e cria-se um fundo de manutenção com parte da economia."}, {"q": "Why will the shaded north-end units not lose out?", "options": ["They will receive a discount", "The panels feed one shared system and savings are split evenly", "Their trees will be removed", "They will get extra panels"], "answer": 1, "expl": "Os painéis alimentam um sistema único compartilhado; a economia é dividida igualmente, independentemente do telhado."}, {"q": "What is Victor's position by the end of the discussion?", "options": ["He still opposes the plan", "He wants to delay the decision indefinitely", "He would vote to bring it to the full owners' meeting", "He wants a cheaper quote first"], "answer": 2, "expl": "Começou cético, mas o rebate, a garantia e o fundo de manutenção o convenceram a levar a proposta à assembleia."}]}, {"part": 6, "name": "Listening for Viewpoints", "qcount": 6, "intro": "You will hear a person talking about a topic. After the talk, you will answer some questions. You will hear the talk one time only.", "context": "A workplace consultant gives a short talk on the four-day work week.", "sections": [{"label": null, "lines": [["N", "Today I want to talk about the four-day work week — the idea of compressing full-time work into four days instead of five, usually with no cut in pay. It's moved from a fringe experiment to something hundreds of companies worldwide have now tried, and the results are more nuanced than either side tends to admit. Let me start with what the evidence genuinely supports. In the largest trials, the vast majority of participating companies chose to keep the shorter week after the pilot ended. The most consistent finding wasn't a jump in output — it was a sharp drop in burnout and sick days, and a noticeable rise in how long employees stayed with the company. For roles where the work can be clearly measured and done independently, productivity often held steady or even improved, because people guarded their focused time and cut the low-value meetings that quietly eat up a fifth day. That said, I think the enthusiasts overstate how universal these gains are. The trials that make headlines are run by organizations that volunteered — companies already motivated to make it work and often in knowledge-based industries. A hospital ward, a busy restaurant, or a factory line can't simply close one day a week; in those settings, a four-day week means either hiring more staff or asking the same people to cram five days of work into four, which can actually increase stress rather than reduce it. There's also a quieter problem. When the shorter week is poorly designed, the lost day doesn't disappear — it reappears as longer, more exhausting ten-hour days, or as work that silently spills into evenings and the so-called day off. The employees look freer on paper while feeling just as stretched. So where does that leave us? My own view is that the four-day week is a powerful tool, but not a universal solution. It works best when a company treats it as a prompt to redesign how work actually gets done — to question which meetings matter and which tasks add value — rather than as a simple calendar change. Cut the fifth day without cutting the fifth day's worth of low-value work, and you haven't given anyone their time back. You've just hidden where it went."]]}], "questions": [{"q": "What is the speaker's overall view of the four-day work week?", "options": ["It is a universal solution every company should adopt", "It is a powerful tool but not right for every workplace", "It is a passing trend with no real benefits", "It only benefits employers, not employees"], "answer": 1, "expl": "A visão central é que é uma ferramenta poderosa, porém não uma solução universal — funciona melhor quando redesenha o trabalho."}, {"q": "According to the speaker, what was the most consistent finding in the largest trials?", "options": ["A large jump in total output", "A sharp drop in burnout and sick days, and better retention", "A big increase in company profits", "A rise in the number of meetings"], "answer": 1, "expl": "O achado mais consistente não foi aumento de produção, e sim queda no esgotamento e em faltas, além de maior retenção."}, {"q": "Why does the speaker say the headline-grabbing trials may be misleading?", "options": ["They were run by companies that volunteered and are often knowledge-based", "They lasted only a few days", "They did not measure productivity", "They were funded by governments"], "answer": 0, "expl": "Os estudos famosos vêm de empresas que se voluntariaram — já motivadas e geralmente de setores do conhecimento."}, {"q": "What problem does the speaker identify for hospitals, restaurants, and factories?", "options": ["Their employees prefer five-day weeks", "They cannot simply close one day a week without hiring more staff or overloading workers", "They are not allowed to try the four-day week", "Their productivity cannot be measured at all"], "answer": 1, "expl": "Esses locais não podem fechar um dia; o resultado é contratar mais gente ou comprimir cinco dias em quatro, aumentando o estresse."}, {"q": "What is the 'quieter problem' the speaker describes?", "options": ["Employees take too many vacations", "The lost day reappears as longer days or work spilling into evenings", "Companies lose customers on the day off", "Salaries are secretly reduced"], "answer": 1, "expl": "Quando mal planejado, o dia 'perdido' reaparece como jornadas de dez horas ou trabalho que vaza para as noites e o 'dia de folga'."}, {"q": "What does the speaker mean by 'you've just hidden where it went'?", "options": ["The company saved money without telling employees", "Cutting the day without cutting low-value work only disguises the lost time, rather than freeing it", "The extra day was moved to the weekend", "The employees were given more vacation instead"], "answer": 1, "expl": "Se você corta o quinto dia sem cortar o trabalho de baixo valor desse dia, não devolveu tempo a ninguém — só escondeu para onde ele foi."}]}], "reading": [{"part": 1, "name": "Reading Correspondence", "qcount": 11, "intro": "Read the following message. Then answer the questions.", "email": {"title": "Email", "from": "From: Nadia Harmon", "to": "To: Riverside Property Management", "subject": "Subject: Balcony door in Unit 4B", "body": ["Dear Riverside Property Management,", "I am writing about a problem with the sliding balcony door in my apartment, Unit 4B, which I have now reported by phone twice without any repair being scheduled. I want to put the details in writing so there is a clear record.", "The door no longer seals properly along the bottom edge. During the heavy rain two weeks ago, water came in under the frame and soaked the carpet nearest the balcony. I dried it as best I could, but the carpet has since developed a musty smell, and I am worried about mould forming underneath if this continues.", "I also want to flag a safety concern. Because the door sticks, I have to pull it hard to open it, and last week the handle came loose in my hand. My elderly mother visits often, and I don't think she could operate the door at all in its current state.", "I understand that repairs take time to arrange, but given the water damage and the loose handle, I would appreciate this being treated as a priority rather than a routine request. Could someone inspect the door this week? I work from home on Tuesdays and Thursdays, so either of those days would be ideal.", "Please confirm a date by email so I can plan around it. Thank you for your attention to this matter.", "Sincerely,", "Nadia Harmon, Unit 4B"]}, "questions": [{"q": "Why is Nadia writing this email?", "options": ["To complain about a noisy neighbour", "To report a balcony door problem that has not been repaired", "To give notice that she is moving out", "To ask about renewing her lease"], "answer": 1, "expl": "Ela escreve sobre a porta de correr da varanda que ainda não foi consertada apesar de dois telefonemas."}, {"q": "Why did Nadia decide to put the issue in writing?", "options": ["Because the manager asked her to", "To create a clear record after reporting it by phone twice", "Because she could not reach anyone by phone", "To request a rent reduction"], "answer": 1, "expl": "Ela diz querer registrar por escrito, já que reportou duas vezes por telefone sem agendamento de reparo."}, {"q": "What happened during the heavy rain?", "options": ["The balcony flooded completely", "Water came in under the door frame and soaked the carpet", "The door glass cracked", "The handle fell off"], "answer": 1, "expl": "Na chuva forte, a água entrou por baixo do batente e encharcou o carpete perto da varanda."}, {"q": "What is the safety concern Nadia mentions?", "options": ["The balcony railing is loose", "The door handle came loose in her hand", "The floor is slippery", "The lock does not work"], "answer": 1, "expl": "Além do vazamento, a maçaneta soltou na mão dela ao puxar a porta emperrada."}, {"q": "What does Nadia want the property manager to understand?", "options": ["That she will not pay rent until it is fixed", "That the problem should be treated as a priority, not a routine request", "That she will repair it herself", "That she is happy to wait several months"], "answer": 1, "expl": "Ela pede que seja tratado como prioridade, dado o dano por água e a maçaneta solta."}, {"q": "What does Nadia ask the manager to do?", "options": ["Call her mother directly", "Confirm an inspection date by email", "Replace the entire balcony", "Send a cleaner for the carpet"], "answer": 1, "expl": "Ela pede confirmação de uma data por e-mail, de preferência terça ou quinta, quando trabalha em casa."}], "response": {"title": "Response", "intro": "Here is a response to the message. Complete the response by filling in the blanks. Select the best choice for each blank from the options provided.", "segments": ["Dear Ms. Harmon,", "Thank you for your detailed email. I am sorry to hear that the balcony door has caused both water damage and a ", null, " concern. I can see from our records that you did call previously, and I apologize that no repair was ", null, " at that time. You were right to put everything in writing.", " Given the damage you described, we will treat this as ", null, " rather than a standard request. A technician is available this ", null, ", which I believe is one of the days you work from home. He will inspect the door, reattach the handle, and assess the carpet for moisture. If mould is found, we will arrange professional cleaning at no cost to you. ", "Please reply to ", null, " this appointment, and we will send a reminder the day before.", "Sincerely, Riverside Property Management"], "blanks": [{"n": 7, "options": ["safety", "financial", "privacy", "parking"], "answer": 0, "expl": "O e-mail original juntava dano por água e uma preocupação de segurança (maçaneta solta) — 'safety'."}, {"n": 8, "options": ["refunded", "scheduled", "cancelled", "approved"], "answer": 1, "expl": "Nenhum reparo foi 'scheduled' (agendado) na ocasião — combina com a queixa dela."}, {"n": 9, "options": ["a priority", "a formality", "an emergency drill", "a complaint"], "answer": 0, "expl": "Ela pediu prioridade; a resposta ecoa 'treat this as a priority'."}, {"n": 10, "options": ["Monday", "Thursday", "Sunday", "weekend"], "answer": 1, "expl": "Ela trabalha em casa terças e quintas; o técnico está livre na quinta ('Thursday')."}, {"n": 11, "options": ["confirm", "postpone", "forget", "ignore"], "answer": 0, "expl": "Pedem que ela responda para 'confirm' (confirmar) o horário; enviarão lembrete no dia anterior."}]}}, {"part": 2, "name": "Reading to Apply a Diagram", "qcount": 8, "intro": "Read the following information. Then answer the questions.", "diagram": {"title": "Harbourview Winter Skating Festival — Visitor Guide", "svg": "skating", "rows": [["When", "Saturday, January 17 – Sunday, January 18 · 10:00 a.m. – 8:00 p.m."], ["Where", "Harbourview Park, main pavilion and outdoor rink"], ["Admission", "Free. Skate rental $8 (bring ID to leave as a deposit)."], ["Rink A — Family Loop", "Gentle oval for beginners and children. Helmets required for ages 12 and under (free loaners at the pavilion)."], ["Rink B — Open Skate", "For confident skaters. No hockey sticks or pucks permitted during festival hours."], ["Warming Hut", "Hot chocolate and snacks. Open until 7:30 p.m. Cash and card accepted."], ["Lessons", "Free 30-minute beginner lessons at 11:00 a.m. and 2:00 p.m. Sign up at the pavilion desk; limited to 15 people per session."], ["Parking", "Lot fills early. Free shuttle runs every 20 minutes from the Elm Street transit station."], ["Note", "In case of mild weather, check the festival website before 9:00 a.m. — the outdoor rink closes if the ice is unsafe, but all indoor activities continue."]]}, "questions": [{"q": "How much does it cost to enter the festival?", "options": ["Eight dollars", "It is free", "Fifteen dollars", "Free only for children"], "answer": 1, "expl": "A entrada (admission) é gratuita; o que custa 8 dólares é o aluguel de patins."}, {"q": "What is required to rent skates?", "options": ["A helmet", "ID left as a deposit", "A festival membership", "A reservation"], "answer": 1, "expl": "O aluguel custa $8 e é preciso deixar um documento (ID) como caução."}, {"q": "Who must wear a helmet on the Family Loop?", "options": ["Everyone", "Children aged 12 and under", "Only adults", "Only lesson participants"], "answer": 1, "expl": "Na Rink A (Family Loop), capacete é obrigatório para crianças de até 12 anos (empréstimo grátis no pavilhão)."}, {"q": "What is NOT allowed on Rink B during festival hours?", "options": ["Beginners", "Hockey sticks and pucks", "Adults", "Skate rentals"], "answer": 1, "expl": "Na Rink B (Open Skate) não são permitidos tacos de hóquei nem pucks durante o festival."}, {"q": "How can a visitor avoid the full parking lot?", "options": ["Arrive after 8:00 p.m.", "Take the free shuttle from Elm Street station", "Park at the warming hut", "Reserve a spot online"], "answer": 1, "expl": "O estacionamento lota cedo; há shuttle gratuito a cada 20 min saindo da estação Elm Street."}], "response": {"title": "Email", "intro": "Read the email below, written by someone who attended the festival. Complete the email by filling in the blanks using information from the guide. Select the best choice for each blank.", "segments": ["Hi Priya,", "We had such a good time at the skating festival! Since the parking lot was already full when we arrived, we left the car at the transit station and took the ", null, ", which came every twenty minutes. My daughter is only nine, so she skated on the Family Loop, and the staff gave her a ", null, " to borrow for free. The best part was that she joined one of the ", null, " beginner lessons — we signed up at the desk as soon as we got there, because there were only fifteen spots. You should bring the kids next year!", "Talk soon, Dana"], "blanks": [{"n": 6, "options": ["shuttle", "taxi", "ferry", "subway"], "answer": 0, "expl": "O guia diz que há shuttle gratuito a cada 20 minutos da estação Elm Street — encaixa com 'came every twenty minutes'."}, {"n": 7, "options": ["helmet", "pair of skates", "snack", "ticket"], "answer": 0, "expl": "Na Family Loop, capacete é obrigatório para menores de 12 e há empréstimo grátis — a filha de 9 anos pegou um capacete."}, {"n": 8, "options": ["free 30-minute", "paid two-hour", "private", "online"], "answer": 0, "expl": "As aulas para iniciantes são gratuitas, de 30 minutos, com inscrição no balcão e limite de 15 pessoas."}]}}, {"part": 3, "name": "Reading for Information", "qcount": 9, "intro": "Read the following passage about the monarch butterfly migration. Then answer the questions. For each statement, choose the paragraph (A, B, C, or D) that gives the information. Choose E if the information is not given in any paragraph.", "passage": [["A", "Each autumn, one of the most remarkable journeys in the natural world unfolds across North America. Monarch butterflies, weighing less than a gram, leave their breeding grounds in Canada and the northern United States and travel as far as four thousand kilometres to a small number of forested mountains in central Mexico. What makes the trip extraordinary is that no single butterfly makes the round trip. The monarchs that fly south in the fall are several generations removed from those that flew north the previous spring, yet they return, year after year, to the very same groves their great-great-grandparents left."], ["B", "How the butterflies find their way remains only partly understood. Scientists have shown that monarchs rely on the position of the sun, using an internal clock to adjust for the time of day. On cloudy days, when the sun is hidden, they appear to fall back on the Earth's magnetic field as a kind of backup compass. This combination allows them to hold a steady southwesterly course even across unfamiliar terrain. Crucially, the migrating generation is physically different from the summer ones: it lives up to eight months rather than a few weeks, and it delays reproduction until the following spring, saving its energy for the long flight and the winter ahead."], ["C", "The wintering sites themselves are tiny and fragile. The butterflies cluster so densely on the branches of fir trees that the limbs bend under their weight, and a single tree may hold tens of thousands of insects. The forest canopy acts like a blanket, keeping temperatures just warm enough to prevent freezing but cool enough that the butterflies do not waste energy. Because the monarchs depend on this narrow band of conditions, the loss of even a small area of forest can have an outsized effect. Illegal logging and a warming climate have both been linked to shrinking colonies in recent decades."], ["D", "Efforts to protect the migration now stretch across three countries. In Mexico, former logging communities have been paid to guard the forests and guide visitors instead of cutting trees. In the United States and Canada, conservation groups encourage people to plant milkweed, the only plant on which monarch caterpillars can feed, along roadsides and in gardens. Schoolchildren tag butterflies with tiny stickers so that researchers can track individual insects across the continent. While the monarch's numbers still rise and fall sharply from year to year, these shared efforts offer a rare example of international cooperation built around a single, fragile species."]], "questions": [{"q": "No individual butterfly completes the entire round trip.", "options": ["A", "B", "C", "D", "Not given"], "answer": 0, "expl": "Parágrafo A: as monarcas que vão ao sul estão várias gerações distantes das que foram ao norte na primavera."}, {"q": "Monarchs use the Earth's magnetic field when the sun is not visible.", "options": ["A", "B", "C", "D", "Not given"], "answer": 1, "expl": "Parágrafo B: em dias nublados, recorrem ao campo magnético como bússola reserva."}, {"q": "The migrating generation lives much longer than the summer generations.", "options": ["A", "B", "C", "D", "Not given"], "answer": 1, "expl": "Parágrafo B: a geração migratória vive até oito meses, não poucas semanas, e adia a reprodução."}, {"q": "The weight of clustered butterflies can bend tree branches.", "options": ["A", "B", "C", "D", "Not given"], "answer": 2, "expl": "Parágrafo C: elas se agrupam tão densamente que os galhos se curvam sob o peso."}, {"q": "Loss of even a small area of forest can strongly affect the colonies.", "options": ["A", "B", "C", "D", "Not given"], "answer": 2, "expl": "Parágrafo C: como dependem de condições muito específicas, perder pouca floresta tem efeito desproporcional."}, {"q": "Milkweed is the only plant monarch caterpillars can eat.", "options": ["A", "B", "C", "D", "Not given"], "answer": 3, "expl": "Parágrafo D: incentiva-se plantar milkweed, única planta de que as lagartas se alimentam."}, {"q": "Former logging communities in Mexico are now paid to protect the forest.", "options": ["A", "B", "C", "D", "Not given"], "answer": 3, "expl": "Parágrafo D: antigas comunidades madeireiras são pagas para guardar a floresta e guiar visitantes."}, {"q": "The distance travelled can reach about four thousand kilometres.", "options": ["A", "B", "C", "D", "Not given"], "answer": 0, "expl": "Parágrafo A: viajam até quatro mil quilômetros até as montanhas do centro do México."}, {"q": "Monarch butterflies are now raised in laboratories to boost their numbers.", "options": ["A", "B", "C", "D", "Not given"], "answer": 4, "expl": "Nenhum parágrafo menciona criação em laboratório — informação não fornecida (E)."}]}, {"part": 4, "name": "Reading for Viewpoints", "qcount": 10, "intro": "Read the following article, which includes different opinions about a community issue. Then answer the questions.", "article": {"title": "Should Downtown Go Car-Free? Our City Weighs a Bold Proposal", "body": ["City council is considering a plan to ban private cars from a ten-block section of the downtown core, allowing only buses, delivery vehicles, cyclists, and pedestrians. Similar schemes in European cities have drawn both praise and protest, and residents here are just as divided.", "Supporters of the plan, led by urban planner Deepa Rao, argue that the change is overdue. \"Our downtown was designed for cars, not people,\" Rao says. \"When you remove through-traffic, the street becomes a place to linger, not just pass through. Cities that have done this see cleaner air, quieter streets, and, counterintuitively, stronger sales for local shops, because foot traffic goes up even as car traffic goes down.\" Rao points to a pilot project on a single street last summer, during which three new cafés opened and reported business that exceeded their expectations.", "Not everyone is convinced. Marco Bellini, who owns a hardware store on the edge of the proposed zone, worries that the plan punishes the very businesses it claims to help. \"People don't carry lumber and paint cans on a bicycle,\" he points out. \"My customers drive here precisely because they're buying heavy things. If they can't park nearby, they'll go to the big-box store out by the highway, and the character of downtown will be lost, not saved.\" Bellini also questions whether the city's bus service is frequent enough to absorb the people who currently drive.", "Even some who support the idea in principle have practical concerns. A recent survey found that residents with limited mobility, and those who work night shifts when buses run rarely, felt the plan had been designed without them in mind. Council has promised that any final version would include accessible drop-off points and expanded evening transit, but critics note that such promises are easy to make and harder to fund. The proposal goes to a public vote next month."]}, "questions": [{"q": "What is the main proposal the article discusses?", "options": ["Building a new highway downtown", "Banning private cars from a ten-block downtown area", "Raising downtown parking fees", "Closing several downtown shops"], "answer": 1, "expl": "O conselho estuda proibir carros particulares em dez quarteirões do centro, permitindo só ônibus, entregas, bikes e pedestres."}, {"q": "According to Deepa Rao, what surprising effect do car-free zones often have?", "options": ["Shops lose business", "Local shop sales grow because foot traffic increases", "Air quality gets worse", "Streets become more crowded with cars"], "answer": 1, "expl": "Rao diz que, contra a intuição, as vendas locais sobem porque o fluxo de pedestres aumenta."}, {"q": "What evidence does Rao use to support her view?", "options": ["A survey of bus drivers", "A pilot project where three new cafés opened and did well", "A study from another country", "A council budget report"], "answer": 1, "expl": "Ela cita o projeto-piloto de uma rua no verão, com três novos cafés que superaram as expectativas."}, {"q": "Why does Marco Bellini oppose the plan?", "options": ["He thinks it will make downtown too quiet", "He believes customers buying heavy goods need to park nearby, or they will shop elsewhere", "He wants more cafés instead of hardware stores", "He prefers to move his shop to the highway"], "answer": 1, "expl": "Bellini vende itens pesados; sem estacionamento próximo, os clientes irão às lojas grandes da rodovia."}, {"q": "What concern did the recent survey reveal?", "options": ["Most residents want more parking", "People with limited mobility and night-shift workers felt overlooked", "Bus fares are too expensive", "Downtown shops are already closing"], "answer": 1, "expl": "A pesquisa mostrou que pessoas com mobilidade reduzida e quem trabalha à noite se sentiram ignorados no plano."}], "response": {"title": "Reader Comment", "intro": "Below is a comment written by a reader of the article. Complete the comment by filling in the blanks. Select the best choice for each blank from the options provided.", "segments": ["As someone who lives three blocks from the proposed zone, I find myself ", null, " between the two sides. I love the idea of quieter streets, and Ms. Rao's point about ", null, " going up when cars go down matches what I saw during last summer's pilot. But Mr. Bellini also has a fair ", null, ": you really can't carry a can of paint home on a bicycle, and shops that sell heavy goods could genuinely suffer. What worries me most, though, is the concern raised in the ", null, " — that people with limited mobility and night-shift workers were not considered. Before I vote, I want to see the council actually ", null, " the money for accessible drop-offs and better evening buses, not just promise it."], "blanks": [{"n": 6, "options": ["torn", "certain", "bored", "delighted"], "answer": 0, "expl": "O leitor se diz dividido entre os dois lados ('torn') — combina com reconhecer méritos em ambos."}, {"n": 7, "options": ["foot traffic", "parking fees", "pollution", "rent"], "answer": 0, "expl": "O ponto de Rao era o fluxo de pedestres (foot traffic) subir quando os carros diminuem."}, {"n": 8, "options": ["point", "discount", "complaint form", "parking spot"], "answer": 0, "expl": "Bellini levanta um argumento válido ('a fair point') sobre mercadorias pesadas."}, {"n": 9, "options": ["survey", "advertisement", "weather report", "menu"], "answer": 0, "expl": "A preocupação sobre mobilidade e turnos noturnos veio da pesquisa (survey) citada no artigo."}, {"n": 10, "options": ["fund", "hide", "refuse", "spend elsewhere"], "answer": 0, "expl": "Ele quer ver o conselho de fato financiar ('fund') os pontos acessíveis e mais ônibus à noite, não só prometer."}]}}], "writing": [{"task": 1, "name": "Writing an Email", "time": 27, "words": "150–200 words", "instructions": "You have about 27 minutes to complete this task. Write about 150–200 words.", "scenario": "The gym in your apartment building is directly below your bedroom. For the past month, residents have been using it very early in the morning, and the noise of dropped weights wakes you up. Write an email to the condo board (the building's management committee).", "bullets": ["explain the problem and how it is affecting you", "describe what you have already tried to solve it", "suggest one or two reasonable solutions the board could put in place"], "model": {"label": "Resposta-modelo (nível alvo 9+)", "text": "Dear Condo Board,\n\nI am writing to raise a problem with noise from the shared gym in our building. My bedroom in Unit 7C is located directly above the gym, and for the past month the sound of weights being dropped on the floor has been waking me and my family several times a week, often before six o'clock in the morning.\n\nI have tried to address this on my own first. I spoke politely with two residents I met leaving the gym, and I also placed a small sign asking people to lower weights gently. Unfortunately, the early-morning noise has continued, and I don't think a handwritten note is enough on its own.\n\nI would like to suggest two possible solutions. First, the board could set official gym hours, perhaps opening it at seven rather than allowing twenty-four-hour access. Second, installing rubber flooring tiles in the weight area would absorb much of the impact at a fairly low cost.\n\nI would be grateful if the board could discuss this at the next meeting. Thank you for your time.\n\nSincerely,\nMy Name, Unit 7C", "analysis": [["Tone / audiência", "Saudação e despedida formais adequadas a um órgão de gestão; educado e firme, sem rudeza."], ["Task Fulfillment", "Cobre as três instruções: explica o problema e o impacto, o que já tentou, e sugere duas soluções concretas."], ["Coherence", "Um parágrafo por ideia, com transições ('First', 'Second'); abertura com propósito claro e fechamento com pedido."], ["Vocabulary / Grammar", "Vocabulário preciso ('shared gym', 'absorb the impact', 'rubber flooring tiles'); estruturas variadas; ~190 palavras."]]}}, {"task": 2, "name": "Responding to Survey Questions", "time": 26, "words": "150–200 words", "instructions": "You have about 26 minutes to complete this task. Write about 150–200 words.", "scenario": "Your town has received a one-time grant large enough to fund ONLY ONE of the following projects. The town council has asked residents to respond to a survey. Choose the option you prefer and explain why.", "options": [["Option A", "Build a new branch of the public library, with study rooms, free internet, and children's programs."], ["Option B", "Build an outdoor sports complex, with soccer fields, a running track, and basketball courts."]], "prompt": "Choose the option that you prefer. Why do you prefer your choice? Explain the reasons for your choice.", "model": {"label": "Resposta-modelo (nível alvo 9+) — escolhe a Opção A", "text": "If the town can fund only one project, I believe the new library branch is the wiser choice, and I would vote for Option A.\n\nMy main reason is that a library serves a far wider range of residents than a sports complex. Children, students, job seekers, and seniors can all use study rooms, free internet, and reading programs, regardless of their age or physical ability. An outdoor sports complex, by contrast, mainly benefits people who are already active and healthy enough to play, and it sits unused during our long, cold winters.\n\nA library is also useful in every season and at almost every hour. On a rainy November evening, a warm, quiet place with free internet is exactly what many families need, especially those who cannot afford a home connection.\n\nI understand the appeal of new soccer fields, and I agree that physical activity matters. However, residents can still jog in our existing parks, whereas there is currently nowhere to study or borrow books nearby. For these reasons, the library would bring lasting value to the greatest number of people.", "analysis": [["Task Fulfillment", "Declara a escolha logo na 1ª frase e foca em razões (não em sugestões); compara com a outra opção, como o nível 9+ pede."], ["Coherence", "Estrutura clara: tese → razão principal (alcance) → razão secundária (uso o ano todo) → concessão + conclusão."], ["Vocabulary", "Preciso e natural: 'job seekers', 'regardless of physical ability', 'lasting value'; evita repetir palavras do enunciado."], ["Grammar / Readability", "Frases variadas, conectivos ('by contrast', 'However', 'whereas'); ~195 palavras, dentro do limite."]]}}], "speaking": [{"task": 1, "name": "Giving Advice", "prep": 30, "speak": 90, "svg": null, "prompt": "Your cousin recently moved to a new city for a job and has told you that she feels lonely and has not made any friends yet. Give her some advice about how she could meet people and build a social life in her new city.", "model": "Hey Maya, I'm really glad you told me how you're feeling — moving somewhere new is hard, and it takes time, so don't be too tough on yourself. Here's what I'd do if I were you. First, try joining something that meets regularly, like a sports league, a run club, or a class at the community centre. The key is that you see the same people every week, because friendships grow from repetition, not just one big event. Another thing you could do is say yes to invitations from coworkers, even small ones like grabbing a coffee — work is actually one of the easiest places to start. One more idea: look for apps or local groups built for newcomers, since everyone there is in the same boat and wants to meet people too. And finally, be patient with it. For the first month or two it feels forced, but around the third time you see someone, it suddenly gets easier. You've got this, Maya — give it a bit of time and you'll have a group before you know it.", "analysis": [["Content/Coherence", "Fala direto com a pessoa, dá quatro sugestões claras com sinalizadores ('First', 'Another thing', 'One more idea', 'finally')."], ["Task Fulfillment", "Cumpre a tarefa: aconselha como conhecer pessoas; tom caloroso e encorajador; usa os ~90s."], ["Vocabulary/Listenability", "Expressões naturais ('in the same boat', 'you've got this'), razão por trás de cada dica (repetição gera amizade)."]]}, {"task": 2, "name": "Talking about a Personal Experience", "prep": 30, "speak": 60, "svg": null, "prompt": "Describe a time when you learned a new skill as an adult. What was the skill, why did you decide to learn it, and how did you feel about the experience?", "model": "A couple of years ago, I decided to learn how to swim properly. I'd always been a bit embarrassed that I could barely stay afloat, and that summer my family rented a cottage by a lake, so I finally had a real reason to do it. I signed up for adult lessons at the local pool — and let me tell you, standing in the shallow end with a group of eight-year-olds was humbling at first. But the instructor was patient, and we started with just floating and breathing. The breakthrough came in about the fourth week, when I swam a full length without stopping. I remember being genuinely proud, almost surprised at myself. By the end of the cottage trip I was swimming out to the dock with everyone else. What stuck with me most wasn't even the swimming — it was realizing that it's never too late to start something, and that feeling a little silly is a small price to pay for learning something you'll use for the rest of your life.", "analysis": [["Content/Coherence", "Narrativa com começo-meio-fim: por que aprendeu → o processo → o momento de virada → o que ficou."], ["Task Fulfillment", "Responde às três perguntas (qual habilidade, por quê, como se sentiu) dentro de 60s."], ["Vocabulary/Listenability", "Detalhes vívidos e concretos ('shallow end', 'swam a full length'), emoção genuína, ritmo natural."]]}, {"task": 3, "name": "Describing a Scene", "prep": 30, "speak": 60, "svg": "market", "prompt": "Describe the scene in the picture below in as much detail as you can. Your listener cannot see the picture, so describe where things are and what the people are doing.", "scene_desc": "An outdoor farmers' market on a sunny day: several striped stalls, a vendor weighing vegetables, a woman choosing apples with a child, a man playing a guitar for tips, a dog on a leash, and baskets of flowers in the foreground.", "model": "This picture shows a busy outdoor farmers' market on what looks like a sunny weekend morning. In the background, there's a row of stalls with red-and-white striped awnings. At the stall on the left, a vendor wearing an apron is weighing some vegetables on a scale for a customer. Moving to the centre of the picture, a woman is standing at a fruit stand, picking out apples, and a young child — maybe her son — is reaching up toward a basket beside her. On the right side, there's a man sitting on a wooden crate playing an acoustic guitar, with an open case in front of him for tips. In the foreground, closest to us, I can see large baskets overflowing with colourful flowers — sunflowers and what look like tulips. There's also a small brown dog on a leash near the flowers, sitting patiently next to its owner. Overall, the atmosphere feels lively and friendly, with people shopping, chatting, and enjoying the music.", "analysis": [["Content/Coherence", "Organiza do fundo para a frente ('In the background', 'centre', 'right side', 'foreground'), fácil de visualizar."], ["Task Fulfillment", "Descreve posição E ação de cada elemento, como a tarefa exige para quem não vê a imagem."], ["Vocabulary/Listenability", "Preposições de lugar precisas, vocabulário específico ('awnings', 'crate', 'overflowing'), fecho com a atmosfera geral."]]}, {"task": 4, "name": "Making Predictions", "prep": 30, "speak": 60, "svg": "market_predict", "prompt": "The picture shows the same farmers' market a few moments later, with dark clouds rolling in. Predict what the people in the scene will probably do next.", "scene_desc": "The same market, but dark storm clouds are gathering and wind is picking up; an awning is flapping, a few papers are blowing, people are glancing up at the sky.", "model": "Looking at these dark clouds rolling in, I think the calm market scene is about to change quickly. The vendors will probably be the first to react — the man at the vegetable stall will likely start covering his produce with tarps or pulling his striped awning down tighter so nothing gets soaked. The woman who was choosing apples will most likely hurry to pay for them and head home before the rain starts, taking her child by the hand. I imagine the guitar player will quickly pack up his instrument, since getting it wet could ruin it, and he'll probably grab his tip case and find shelter under one of the stalls. The dog owner will almost certainly pick up the little dog or lead it away quickly. If the wind keeps getting stronger, some of the lighter stalls and the flower baskets might even tip over, so the vendors will be rushing to secure everything. Within a few minutes, I'd expect most of the shoppers to be gone and the market to look nearly empty as everyone takes cover from the storm.", "analysis": [["Content/Coherence", "Usa a mesma cena para prever reações plausíveis, ligadas a causa ('since getting it wet could ruin it')."], ["Task Fulfillment", "Faz previsões (não descrição), usando linguagem de probabilidade: 'will probably', 'most likely', 'almost certainly'."], ["Vocabulary/Listenability", "Variedade de graus de certeza, conectivos de tempo ('first', 'Within a few minutes'), fluxo natural."]]}, {"task": 5, "name": "Comparing and Persuading", "prep": 60, "speak": 60, "svg": null, "prompt": "Your family is planning a one-week summer vacation and has narrowed it down to two options. Choose the option you think is better and try to persuade a family member to agree with you.", "options": [["Option A", "A quiet week at a lakeside cabin: swimming, hiking, campfires, and no internet."], ["Option B", "A week in a big city: museums, restaurants, shopping, and live shows."]], "model": "Okay Dad, I've thought about both options, and I really think we should go with the lakeside cabin — Option A. I know the city sounds exciting, with all the museums and restaurants, but hear me out. First, we've all been glued to our screens and running around nonstop this year, and a week by the lake with no internet is exactly the kind of reset we need. We'd actually talk to each other instead of staring at our phones. Second, think about the cost — a cabin is usually way cheaper than a week of city hotels, restaurant meals, and show tickets, so we'd come home relaxed instead of stressed about money. And the cabin isn't boring at all: we can swim, hike, and do campfires at night, which the little ones would absolutely love. We can always do a city trip for a long weekend later in the year, when it's cheaper and less crowded. But for a full week in the summer, the lake gives us rest, family time, and the outdoors all at once. Come on — doesn't a quiet morning coffee by the water sound perfect? Let's book the cabin.", "analysis": [["Content/Coherence", "Reconhece a outra opção, depois dá razões em sequência ('First', 'Second') e encerra com apelo direto."], ["Task Fulfillment", "Escolhe uma opção E persuade uma pessoa específica (o pai), não apenas descreve — foco em convencer."], ["Vocabulary/Listenability", "Linguagem persuasiva ('hear me out', 'Come on'), comparação explícita de custo e benefício, tom caloroso."]]}, {"task": 6, "name": "Dealing with a Difficult Situation", "prep": 60, "speak": 60, "svg": null, "prompt": "You reserved a hall for your community group's anniversary party, but the venue has just told you they accidentally double-booked your date. They offer you two choices: (1) a full refund, but you must find another venue yourself with only two weeks' notice, or (2) a much smaller room in the same building on your original date, which may be too small for all your guests. Call the group's co-organizer, explain the situation, say which option you chose, and explain why.", "model": "Hi Sandra, it's me — I've got some frustrating news about the anniversary party, but I think I've found the best way forward. The venue just called and admitted they double-booked our date by mistake. They gave us two options: either a full refund, but then we'd have to find a brand-new venue in just two weeks, or a smaller room in the same building on our original date. I went ahead and chose the smaller room, and here's my thinking. Two weeks is really not enough time to find, book, and organize a whole new venue, especially in summer when everything's reserved — we'd be scrambling and might end up with nothing. The smaller room might be a bit tight, but we can make it work: we could keep the guest list to members only, set up a few tables outside if the weather's nice, and do more of a standing, mingling format instead of a sit-down dinner. It keeps our date, it keeps the deposit secure, and it avoids a last-minute panic. Can you call me back tonight so we can start adjusting the setup? Thanks, Sandra.", "analysis": [["Content/Coherence", "Expõe o problema, declara a escolha e justifica com clareza; propõe como viabilizar a sala menor."], ["Task Fulfillment", "Cumpre tudo: explica a situação, diz a opção escolhida, dá motivos e sugere próximos passos a uma pessoa específica."], ["Vocabulary/Listenability", "Tom de quem resolve problemas ('here's my thinking', 'we can make it work'), soluções concretas, pedido final de retorno."]]}, {"task": 7, "name": "Expressing Opinions", "prep": 30, "speak": 90, "svg": null, "prompt": "Some people believe that all high school students should be required to learn a second language. Others believe it should be optional. What is your opinion? Explain your reasons.", "model": "In my opinion, learning a second language should be required for all high school students, not left as an option. I feel strongly about this for a few reasons. First, the teenage years are one of the best windows for picking up a language — the brain is still highly adaptable, and skills learned then tend to stick for life. If we make it optional, many students who would actually benefit will avoid it simply because it feels hard, and they'll lose that window for good. Second, a second language isn't just an academic subject; it builds real-world advantages. It opens up job opportunities, makes travel richer, and, honestly, it teaches you to see the world from another culture's point of view, which makes people more open-minded. I do understand the other side — some students struggle with languages and might prefer to focus on math or science. But schools already require subjects we don't all love, like history or physical education, precisely because they're considered part of a well-rounded education. A second language belongs in that same category. So while I'd support flexibility in which language students choose, I don't think whether to learn one at all should be optional. The long-term benefits are simply too valuable to leave to chance.", "analysis": [["Content/Coherence", "Posição clara na 1ª frase, dois argumentos desenvolvidos ('First', 'Second'), concessão e conclusão — usa bem os 90s."], ["Task Fulfillment", "Dá opinião E a sustenta com razões; reconhece o lado oposto, como o nível alto exige."], ["Vocabulary/Listenability", "Vocabulário preciso ('highly adaptable', 'well-rounded education'), analogia convincente (história, ed. física)."]]}, {"task": 8, "name": "Describing an Unusual Situation", "prep": 30, "speak": 60, "svg": "unusual", "prompt": "You see the unusual scene in the picture while walking in a park. You want to tell a friend about it on the phone. Describe the scene in as much detail as you can so your friend can picture it.", "scene_desc": "A park path where a man in a full business suit is calmly walking a large pig on a leash; the pig wears a small red sweater; nearby, two joggers have stopped and are staring, and a child is pointing and laughing.", "model": "You will not believe what I'm looking at in the park right now — I had to call you. So there's this man walking along the main path, and he's dressed in a full business suit, like he's on his way to an important meeting — grey jacket, tie, the whole thing. But here's the strange part: instead of a dog, he's walking a pig. A real, full-sized pig, on a leash! And the pig is actually wearing a little red sweater, like a pet outfit. The man looks completely calm, as if this is the most normal thing in the world, just strolling along. Meanwhile, everyone around him is reacting. Two joggers have stopped dead in their tracks and are just staring with their mouths open, and there's a little kid nearby who's pointing and laughing at the pig. Even I'm standing here grinning like an idiot. The pig seems totally relaxed too, trotting along beside him, sniffing the grass. I really wish you could see this — it's the most random, hilarious thing I've seen all week. I'm going to try to sneak a photo before they walk off.", "analysis": [["Content/Coherence", "Abre prendendo a atenção, descreve o incomum em ordem (homem → porco → reações ao redor), fecho natural."], ["Task Fulfillment", "Descreve a cena incomum em detalhe para quem não vê, no registro informal de uma ligação a um amigo."], ["Vocabulary/Listenability", "Expressões naturais e expressivas ('stopped dead in their tracks', 'grinning like an idiot'), entusiasmo audível."]]}], "voiceRole": {"W": "female", "W2": "female2", "M": "male", "N": "narrator"}, "scoreL": [["10–12", 35], ["9", 33], ["8", 30], ["7", 27], ["6", 22], ["5", 17], ["4", 11], ["3", 7], ["M–2", 0]], "scoreR": [["10–12", 33], ["9", 31], ["8", 28], ["7", 24], ["6", 19], ["5", 15], ["4", 10], ["3", 8], ["M–2", 0]]};
+const LETTERS = ["A","B","C","D","E"];
+let TEACHER = false;
+const store = {
+  get(){try{return JSON.parse(localStorage.getItem("celpip_sim")||"{}")}catch(e){return {}}},
+  set(o){try{localStorage.setItem("celpip_sim",JSON.stringify(o))}catch(e){}},
+};
+let ANS = store.get();
+function save(id,val){ANS[id]=val;store.set(ANS);}
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ---------------- NAV ---------------- */
+const SECTIONS=[
+ ["home","Início"],["listening","Listening"],["reading","Reading"],
+ ["writing","Writing"],["speaking","Speaking"],["results","Resultados"]
+];
+let CUR="home";
+function buildNav(){
+  const n=document.getElementById("nav");n.innerHTML="";
+  SECTIONS.forEach(([id,label])=>{
+    const b=document.createElement("button");b.textContent=label;b.dataset.id=id;
+    if(id===CUR)b.classList.add("active");
+    b.onclick=()=>go(id);n.appendChild(b);
+  });
+}
+function go(id){CUR=id;buildNav();window.scrollTo(0,0);render();}
+
+/* ---------------- RENDER ROUTER ---------------- */
+function render(){
+  const app=document.getElementById("app");
+  if(CUR==="home")app.innerHTML=renderHome();
+  else if(CUR==="listening")renderListening(app);
+  else if(CUR==="reading")renderReading(app);
+  else if(CUR==="writing")renderWriting(app);
+  else if(CUR==="speaking")renderSpeaking(app);
+  else if(CUR==="results")renderResults(app);
+  applyTeacher();
+}
+
+/* ---------------- HOME ---------------- */
+function renderHome(){
+  return `
+  <div class="card">
+    <h1>CELPIP-General — Simulado completo</h1>
+    <p class="lead">Teste simulado de prática com os quatro módulos oficiais. Conteúdo 100% original,
+    diferente dos testes já realizados — mesmos objetivos e formato, temas novos.</p>
+    <div class="grid" style="margin-top:16px">
+      ${mod("listening","🎧","Listening","6 partes · 38 questões · ~50 min")}
+      ${mod("reading","📖","Reading","4 partes · 38 questões · ~55 min")}
+      ${mod("writing","✍️","Writing","2 tarefas · e-mail + survey · ~53 min")}
+      ${mod("speaking","🎙️","Speaking","8 tarefas · ~15 min")}
+    </div>
+    <hr>
+    <div class="row">
+      <button class="btn" onclick="go('listening')">▶ Começar pelo Listening</button>
+      <button class="btn sec" onclick="go('results')">Ver pontuação</button>
+      <button class="btn sec" onclick="clearAll()">Limpar respostas</button>
+    </div>
+    <div class="tip" style="margin-top:14px">💡 Dica: ligue o <b>🔑 Professor</b> no topo para revelar o gabarito,
+    as explicações de cada questão e as transcrições do Listening.</div>
+  </div>
+  <div class="card">
+    <div class="sub">Como funciona a pontuação</div>
+    <p class="small muted" style="margin-top:0">Listening e Reading têm 38 questões cada e são corrigidos
+    automaticamente, convertendo o número de acertos em um nível CELPIP (de M–2 a 10–12), como na tabela oficial.
+    Writing e Speaking não recebem nota automática: para cada tarefa há uma <b>resposta-modelo</b> de nível alto
+    e uma análise pelos <i>Performance Standards</i> (Content/Coherence, Vocabulary, Listenability/Readability,
+    Task Fulfillment) para você comparar e se autoavaliar.</p>
+  </div>`;
+}
+function mod(id,ic,t,p){return `<div class="mod" onclick="go('${id}')"><span class="edge"></span>
+  <div class="ic">${ic}</div><h3>${t}</h3><p>${p}</p></div>`;}
+
+/* ---------------- LISTENING ---------------- */
+function qId(mod,pi,kind,i){return `${mod}-${pi}-${kind}${i}`;}
+function optionBlock(id,opts,ansIdx){
+  const cur=ANS[id];
+  return opts.map((o,i)=>{
+    const checked=cur===i?"checked":"";
+    return `<label class="opt" data-opt="${id}" data-i="${i}" data-ans="${ansIdx}">
+      <input type="radio" name="${id}" ${checked} onchange="save('${id}',${i});markOne('${id}',${ansIdx})">
+      <span class="lt">${LETTERS[i]}</span><span>${esc(o)}</span></label>`;
+  }).join("");
+}
+function qCard(num,id,qtext,opts,ansIdx,expl){
+  return `<div class="q">
+    <div class="qh"><span class="qn">${num}</span><span>${esc(qtext)}</span></div>
+    <div class="opts" id="wrap-${id}">${optionBlock(id,opts,ansIdx)}</div>
+    <div class="expl ${TEACHER?'':'hidden'}" id="exp-${id}"><b>Gabarito ${LETTERS[ansIdx]}.</b> ${esc(expl)}</div>
+  </div>`;
+}
+function renderListening(app){
+  let h=`<div class="card"><div class="band">Listening <span class="pill">6 partes · 38 questões</span></div>
+    <p class="lead">Ouça cada áudio uma vez (no teste real não há repetição) e responda. Aqui, para estudo, você
+    pode repetir e ajustar a velocidade. Use fones para ouvir melhor as vozes dos diferentes falantes.</p>
+    <div class="tip">🔊 O áudio é lido pela voz do seu navegador (Web Speech API). Se nada tocar, verifique o volume
+    e permita áudio; em alguns navegadores é preciso clicar em “Tocar áudio” uma vez para ativar.</div></div>`;
+  let num=0;
+  DATA.listening.forEach((part,pi)=>{
+    h+=`<div class="card">
+      <div class="band">Part ${part.part}: ${esc(part.name)} <span class="pill">${part.qcount} Q</span></div>
+      <div class="sub">Instructions</div>
+      <p class="small" style="margin-top:0">${esc(part.intro)}</p>
+      <div class="part-ctx"><b>Context:</b> ${esc(part.context)}</div>
+      ${playerHTML(pi)}
+      <div class="transcript hidden" id="tr-${pi}">${transcriptHTML(part)}</div>
+      <div class="sub" style="margin-top:14px">Questions</div>`;
+    part.questions.forEach((q,qi)=>{num++;h+=qCard(num,qId('L',pi,'q',qi),q.q,q.options,q.answer,q.expl);});
+    h+=`</div>`;
+  });
+  h+=navButtons("listening");
+  app.innerHTML=h;
+}
+function playerHTML(pi){
+  return `<div class="player" id="pl-${pi}">
+    <div class="pt">🎧 Audio — Part ${pi+1}
+      <span class="wave off"><i></i><i></i><i></i><i></i><i></i></span></div>
+    <div class="ctrls">
+      <button onclick="playPart(${pi})">▶ Tocar áudio</button>
+      <button onclick="pauseAudio(${pi})">⏸ Pausar</button>
+      <button onclick="stopAudio(${pi})">⏹ Parar</button>
+      <span class="speed">Velocidade
+        <input type="range" min="0.7" max="1.1" step="0.05" value="0.95" id="sp-${pi}">
+      </span>
+    </div>
+    <div class="note">No CELPIP real o áudio toca uma única vez e não pode ser pausado.</div>
+  </div>`;
+}
+function transcriptHTML(part){
+  let h=`<div class="sub" style="margin-top:0">Transcrição</div>`;
+  part.sections.forEach(s=>{
+    if(s.label)h+=`<div class="small" style="font-weight:700;color:var(--blue);margin:8px 0 2px">${esc(s.label)}</div>`;
+    s.lines.forEach(([sp,t])=>{
+      const nm={W:"Woman",M:"Man",W2:"Second woman",N:"Narrator"}[sp]||sp;
+      h+=`<div class="ln"><span class="sp">${nm}:</span> ${esc(t)}</div>`;
+    });
+  });
+  return h;
+}
+
+/* ---- Speech synthesis ---- */
+let VOICES=[];
+function loadVoices(){VOICES=window.speechSynthesis?speechSynthesis.getVoices():[];}
+if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
+function pickVoices(){
+  const en=VOICES.filter(v=>/en[-_]/i.test(v.lang));
+  const pool=en.length?en:VOICES;
+  const find=(re)=>pool.find(v=>re.test(v.name));
+  return {
+    male: find(/david|mark|alex|daniel|male|guy|tom|george/i)||pool[0]||null,
+    female: find(/zira|samantha|susan|female|hazel|karen|moira|fiona/i)||pool[1]||pool[0]||null,
+    female2: find(/aria|jenny|eva|catherine|tessa|veena/i)||pool[2]||pool[1]||pool[0]||null,
+    narrator: find(/david|guy|mark|news|brian/i)||pool[0]||null,
+  };
+}
+let QUEUE=[], QI=0, CURPI=-1;
+function playPart(pi){
+  if(!window.speechSynthesis){alert("Seu navegador não suporta síntese de voz.");return;}
+  stopAudio(CURPI); CURPI=pi;
+  const part=DATA.listening[pi]; const vs=pickVoices();
+  const roleV={W:vs.female,W2:vs.female2,M:vs.male,N:vs.narrator};
+  const rate=parseFloat((document.getElementById('sp-'+pi)||{}).value||0.95);
+  QUEUE=[];
+  part.sections.forEach(s=>{
+    if(s.label)QUEUE.push({text:s.label+".",role:"N"});
+    s.lines.forEach(([sp,t])=>QUEUE.push({text:t,role:sp}));
+  });
+  QI=0; setPlaying(pi,true); speakNext(pi,roleV,rate);
+}
+function speakNext(pi,roleV,rate){
+  if(QI>=QUEUE.length){setPlaying(pi,false);return;}
+  const item=QUEUE[QI++];
+  const u=new SpeechSynthesisUtterance(item.text);
+  const v=roleV[item.role]; if(v)u.voice=v;
+  u.rate=rate; u.pitch=item.role==="M"?0.85:(item.role==="W2"?1.2:(item.role==="N"?1.0:1.08));
+  u.onend=()=>speakNext(pi,roleV,rate);
+  u.onerror=()=>speakNext(pi,roleV,rate);
+  speechSynthesis.speak(u);
+}
+function pauseAudio(pi){if(window.speechSynthesis){if(speechSynthesis.paused){speechSynthesis.resume();}else{speechSynthesis.pause();}}}
+function stopAudio(pi){if(window.speechSynthesis)speechSynthesis.cancel();setPlaying(pi,false);}
+function setPlaying(pi,on){const el=document.getElementById('pl-'+pi);if(!el)return;
+  el.classList.toggle('playing',on);const w=el.querySelector('.wave');if(w)w.classList.toggle('off',!on);}
+
+/* ---------------- READING ---------------- */
+function renderReading(app){
+  let h=`<div class="card"><div class="band">Reading <span class="pill">4 partes · 38 questões</span></div>
+    <p class="lead">Leia cada texto e responda. Nas Partes 1, 2 e 4, além das perguntas de múltipla escolha,
+    há um segundo texto com lacunas para completar.</p></div>`;
+  let num=0;
+  DATA.reading.forEach((part,pi)=>{
+    h+=`<div class="card">
+      <div class="band">Part ${part.part}: ${esc(part.name)} <span class="pill">${part.qcount} Q</span></div>
+      <div class="sub">Instructions</div><p class="small" style="margin-top:0">${esc(part.intro)}</p>`;
+    if(part.email)h+=emailHTML(part.email);
+    if(part.diagram)h+=diagramHTML(part.diagram);
+    if(part.passage)h+=passageHTML(part.passage);
+    if(part.article)h+=articleHTML(part.article);
+    if(part.questions&&part.questions.length){
+      h+=`<div class="sub" style="margin-top:14px">Questions</div>`;
+      part.questions.forEach((q,qi)=>{num++;h+=qCard(num,qId('R',pi,'q',qi),q.q,q.options,q.answer,q.expl);});
+    }
+    if(part.response)h+=responseHTML(part.response,pi,()=>{num++;return num;});
+    h+=`</div>`;
+  });
+  h+=navButtons("reading");
+  app.innerHTML=h;
+}
+function emailHTML(e){
+  return `<div class="email"><div class="meta">${esc(e.from)} &nbsp;·&nbsp; ${esc(e.to)}<br>${esc(e.subject)}</div>
+    ${e.body.map(p=>`<p>${esc(p)}</p>`).join("")}</div>`;
+}
+function passageHTML(ps){
+  return `<div class="passage">${ps.map(([l,t])=>
+    `<div class="para"><span class="plabel">${l}</span><div>${esc(t)}</div></div>`).join("")}</div>`;
+}
+function articleHTML(a){
+  return `<div class="article"><h2 style="font-size:17px;margin:0 0 10px">${esc(a.title)}</h2>
+    ${a.body.map(p=>`<p>${esc(p)}</p>`).join("")}</div>`;
+}
+function diagramHTML(d){
+  const svg=SCENES[d.svg]?SCENES[d.svg]():"";
+  return `<div class="diagram"><h2 style="font-size:17px;margin:0 0 10px">${esc(d.title)}</h2>
+    ${svg}
+    <table class="dtable">${d.rows.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table></div>`;
+}
+function responseHTML(r,pi,nextNum){
+  let h=`<hr><div class="sub">${esc(r.title)}</div><p class="small muted" style="margin-top:0">${esc(r.intro)}</p>`;
+  h+=`<div class="email">`;
+  let bi=0;
+  r.segments.forEach(seg=>{
+    if(seg===null){
+      const blank=r.blanks[bi]; const id=qId('R',pi,'b',blank.n); const cur=ANS[id];
+      let opts=`<option value="">— ${blank.n} —</option>`;
+      blank.options.forEach((o,i)=>{opts+=`<option value="${i}" ${cur==i?'selected':''}>${esc(o)}</option>`;});
+      h+=`<span class="inlineblank" id="bl-${id}" data-ans="${blank.answer}">
+        <select onchange="save('${id}',this.value===''?undefined:+this.value);markBlank('${id}',${blank.answer})">${opts}</select>
+        </span>`;
+      h+=`<span class="bexpl ${TEACHER?'':'hidden'}" id="bx-${id}" style="display:${TEACHER?'block':'none'}">
+         <b>${blank.n}. ${esc(blank.options[blank.answer])}</b> — ${esc(blank.expl)}</span>`;
+      bi++;
+    } else {
+      h+=esc(seg);
+    }
+  });
+  h+=`</div>`;
+  return h;
+}
+
+/* ---------------- WRITING ---------------- */
+function renderWriting(app){
+  let h=`<div class="card"><div class="band">Writing <span class="pill">2 tarefas</span></div>
+    <p class="lead">Escreva cada resposta no campo indicado. Há um cronômetro e um contador de palavras.
+    Depois, compare com a resposta-modelo (nível alvo 9+) e a análise.</p></div>`;
+  DATA.writing.forEach((t,ti)=>{
+    const id=qId('W',ti,'t',0);
+    h+=`<div class="card">
+      <div class="band">Task ${t.task}: ${esc(t.name)} <span class="pill">${t.words}</span></div>
+      <p class="small" style="margin-top:0"><b>${esc(t.instructions)}</b></p>
+      <div class="part-ctx">${esc(t.scenario)}</div>`;
+    if(t.bullets){h+=`<p class="small" style="margin:0 0 4px"><b>In your email:</b></p><ul class="small" style="margin-top:0">`+
+      t.bullets.map(b=>`<li>${esc(b)}</li>`).join("")+`</ul>`;}
+    if(t.options){h+=`<div class="opts2">`+t.options.map(([n,d])=>
+      `<div class="ob"><b>${esc(n)}</b><br>${esc(d)}</div>`).join("")+`</div>
+      <p class="small" style="margin:0"><b>${esc(t.prompt)}</b></p>`;}
+    h+=`<div class="timerbar">
+        <span class="clock" id="wck-${ti}">${t.time}:00</span>
+        <button class="btn sm" onclick="startTimer('wck-${ti}',${t.time})">▶ Iniciar ${t.time} min</button>
+        <button class="btn sm sec" onclick="stopTimer('wck-${ti}')">⏹</button>
+        <span class="wc" id="wc-${ti}">0 palavras</span>
+      </div>
+      <textarea id="${id}" placeholder="Digite sua resposta aqui..."
+        oninput="save('${id}',this.value);countWords('${id}','wc-${ti}')">${esc(ANS[id]||"")}</textarea>
+      <div class="row" style="margin-top:12px">
+        <button class="btn sec" onclick="toggle('wm-${ti}')">👁 Ver resposta-modelo e análise</button>
+      </div>
+      <div class="collapse hidden" id="wm-${ti}">
+        <div class="model"><span class="mlbl">${esc(t.model.label)}</span>${esc(t.model.text)}</div>
+        <div class="anal">${t.model.analysis.map(([k,v])=>`<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join("")}</div>
+      </div>
+    </div>`;
+  });
+  h+=navButtons("writing");
+  app.innerHTML=h;
+  DATA.writing.forEach((t,ti)=>countWords(qId('W',ti,'t',0),'wc-'+ti));
+}
+
+/* ---------------- SPEAKING ---------------- */
+function renderSpeaking(app){
+  let h=`<div class="card"><div class="band">Speaking <span class="pill">8 tarefas</span></div>
+    <p class="lead">Para cada tarefa: leia o enunciado, use o tempo de preparação e depois fale em voz alta durante
+    o tempo de gravação. (Aqui os cronômetros simulam o tempo; o teste real grava sua voz.) Em seguida, compare com
+    a resposta-modelo e a análise.</p>
+    <div class="tip">🎙️ Dica de estudo: grave-se com o app de voz do seu celular e compare seu áudio com a
+    resposta-modelo, observando ritmo, vocabulário e cumprimento da tarefa.</div></div>`;
+  DATA.speaking.forEach((t,ti)=>{
+    h+=`<div class="card">
+      <div class="band">Task ${t.task}: ${esc(t.name)}
+        <span class="pill">prep ${t.prep}s · fala ${t.speak}s</span></div>
+      <div class="part-ctx">${esc(t.prompt)}</div>`;
+    if(t.svg&&SCENES[t.svg])h+=SCENES[t.svg]();
+    if(t.options){h+=`<div class="opts2">`+t.options.map(([n,d])=>
+      `<div class="ob"><b>${esc(n)}</b><br>${esc(d)}</div>`).join("")+`</div>`;}
+    h+=`<div class="timerbar">
+        <span class="clock" id="sck-${ti}">0:${String(t.prep).padStart(2,'0')}</span>
+        <button class="btn sm blue" onclick="speakPrep(${ti},${t.prep},${t.speak})">▶ Preparação (${t.prep}s)</button>
+        <button class="btn sm" onclick="speakGo(${ti},${t.speak})">🎙️ Falar (${t.speak}s)</button>
+        <button class="btn sm sec" onclick="stopTimer('sck-${ti}')">⏹</button>
+        <span class="wc" id="sst-${ti}">pronto</span>
+      </div>
+      <div class="row">
+        <button class="btn sec" onclick="toggle('sm-${ti}')">👁 Ver resposta-modelo e análise</button>
+      </div>
+      <div class="collapse hidden" id="sm-${ti}">
+        <div class="model"><span class="mlbl">Resposta-modelo</span>${esc(t.model)}</div>
+        <div class="anal">${t.analysis.map(([k,v])=>`<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join("")}</div>
+      </div>
+    </div>`;
+  });
+  h+=navButtons("speaking");
+  app.innerHTML=h;
+}
+
+/* ---------------- RESULTS ---------------- */
+function levelFor(score,table){for(const [lv,mn] of table){if(score>=mn)return lv;}return table[table.length-1][0];}
+function renderResults(app){
+  let lc=0,lt=0,rc=0,rt=0;
+  DATA.listening.forEach((p,pi)=>p.questions.forEach((q,qi)=>{lt++;if(ANS[qId('L',pi,'q',qi)]===q.answer)lc++;}));
+  DATA.reading.forEach((p,pi)=>{
+    (p.questions||[]).forEach((q,qi)=>{rt++;if(ANS[qId('R',pi,'q',qi)]===q.answer)rc++;});
+    if(p.response)p.response.blanks.forEach(b=>{rt++;if(ANS[qId('R',pi,'b',b.n)]===b.answer)rc++;});
+  });
+  const ll=levelFor(lc,DATA.scoreL), rl=levelFor(rc,DATA.scoreR);
+  let h=`<div class="card"><div class="band">Resultados</div>
+    <p class="lead">Listening e Reading são corrigidos automaticamente. Writing e Speaking não recebem nota
+    automática — compare suas respostas com as respostas-modelo em cada módulo.</p>
+    <div class="scorebox" style="margin-top:14px">
+      <div class="sc"><div class="den">Listening</div><div class="big">${lc}<span style="font-size:20px">/${lt}</span></div>
+        <div class="lvl">CELPIP ${ll}</div></div>
+      <div class="sc"><div class="den">Reading</div><div class="big">${rc}<span style="font-size:20px">/${rt}</span></div>
+        <div class="lvl">CELPIP ${rl}</div></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" onclick="render()">🔄 Atualizar</button>
+      <button class="btn sec" onclick="document.getElementById('teacher').click()">🔑 Alternar gabarito</button>
+      <button class="btn sec" onclick="clearAll()">Limpar respostas</button>
+    </div>
+  </div>
+  <div class="card"><div class="sub">Equivalência aproximada</div>
+    <table class="dtable"><tr><td>CELPIP ${ll} (Listening)</td><td>${celpipMap(ll)}</td></tr>
+    <tr><td>CELPIP ${rl} (Reading)</td><td>${celpipMap(rl)}</td></tr></table>
+    <p class="small muted" style="margin-top:8px">Writing & Speaking: use as respostas-modelo e os
+    <i>Performance Standards</i> para estimar seu nível (Target 5 ≈ CLB5/B1 · Target 9 ≈ CLB9/B2).</p>
+  </div>`;
+  app.innerHTML=h;
+}
+function celpipMap(l){const m={"10–12":"CLB 10–12 · C1–C2 · uso avançado","9":"CLB 9 · B2+ · muito bom",
+  "8":"CLB 8 · B2","7":"CLB 7 · B2 inicial","6":"CLB 6 · B1+ (comum p/ imigração)",
+  "5":"CLB 5 · B1","4":"CLB 4 · A2+","3":"CLB 3 · A2","M–2":"abaixo de CLB 3"};return m[l]||"";}
+
+/* ---------------- shared UI ---------------- */
+function navButtons(cur){
+  const order=["listening","reading","writing","speaking","results"];
+  const i=order.indexOf(cur);const prev=i>0?order[i-1]:"home";const next=order[i+1]||"results";
+  return `<div class="card"><div class="row">
+    <button class="btn sec" onclick="go('${prev}')">← Voltar</button>
+    <button class="btn" onclick="go('${next}')">Próximo →</button>
+  </div></div>`;
+}
+function markOne(id,ans){
+  if(!TEACHER)return;
+  document.querySelectorAll(`[data-opt="${id}"]`).forEach(el=>{
+    const i=+el.dataset.i;el.classList.remove('correct','wrong');
+    if(i===ans)el.classList.add('correct');
+    else if(ANS[id]===i)el.classList.add('wrong');
+  });
+}
+function markBlank(id,ans){
+  if(!TEACHER)return;const el=document.getElementById('bl-'+id);if(!el)return;
+  el.classList.remove('correct','wrong');
+  if(ANS[id]==ans)el.classList.add('correct');else if(ANS[id]!=null)el.classList.add('wrong');
+}
+function toggle(id){const el=document.getElementById(id);if(el)el.classList.toggle('hidden');}
+function countWords(taId,wcId){const ta=document.getElementById(taId);const wc=document.getElementById(wcId);
+  if(!ta||!wc)return;const n=(ta.value.trim().match(/\S+/g)||[]).length;wc.textContent=n+" palavras";
+  wc.style.color=(n>=150&&n<=200)?"var(--good)":"var(--mut)";}
+function clearAll(){if(confirm("Apagar todas as respostas salvas?")){ANS={};store.set(ANS);render();}}
+
+/* timers */
+const TIMERS={};
+function startTimer(id,mins){stopTimer(id);let s=mins*60;const el=document.getElementById(id);
+  const tick=()=>{const m=Math.floor(s/60),ss=s%60;el.textContent=m+":"+String(ss).padStart(2,'0');
+    el.classList.toggle('warn',s<=60);if(s<=0){stopTimer(id);el.textContent="0:00";}s--;};
+  tick();TIMERS[id]=setInterval(tick,1000);}
+function stopTimer(id){if(TIMERS[id]){clearInterval(TIMERS[id]);delete TIMERS[id];}}
+function speakPrep(ti,prep,speak){const id='sck-'+ti;stopTimer(id);let s=prep;const el=document.getElementById(id);
+  document.getElementById('sst-'+ti).textContent="preparando…";
+  const tick=()=>{el.textContent="0:"+String(Math.max(s,0)).padStart(2,'0');el.classList.toggle('warn',s<=5);
+    if(s<=0){stopTimer(id);speakGo(ti,speak);return;}s--;};tick();TIMERS[id]=setInterval(tick,1000);}
+function speakGo(ti,speak){const id='sck-'+ti;stopTimer(id);let s=speak;const el=document.getElementById(id);
+  const st=document.getElementById('sst-'+ti);st.textContent="🎙️ fale agora";st.style.color="var(--bad)";
+  const tick=()=>{const m=Math.floor(s/60),ss=s%60;el.textContent=m+":"+String(ss).padStart(2,'0');
+    el.classList.toggle('warn',s<=10);if(s<=0){stopTimer(id);st.textContent="tempo esgotado";st.style.color="var(--mut)";return;}s--;};
+  tick();TIMERS[id]=setInterval(tick,1000);}
+
+/* teacher mode */
+function applyTeacher(){
+  document.querySelectorAll('.expl').forEach(e=>e.classList.toggle('hidden',!TEACHER));
+  document.querySelectorAll('.bexpl').forEach(e=>{e.classList.toggle('hidden',!TEACHER);e.style.display=TEACHER?'block':'none';});
+  document.querySelectorAll('.transcript').forEach(e=>e.classList.toggle('hidden',!TEACHER));
+  if(TEACHER){
+    DATA.listening.forEach((p,pi)=>p.questions.forEach((q,qi)=>markOne(qId('L',pi,'q',qi),q.answer)));
+    DATA.reading.forEach((p,pi)=>{(p.questions||[]).forEach((q,qi)=>markOne(qId('R',pi,'q',qi),q.answer));
+      if(p.response)p.response.blanks.forEach(b=>markBlank(qId('R',pi,'b',b.n),b.answer));});
+  } else {
+    document.querySelectorAll('.opt').forEach(e=>e.classList.remove('correct','wrong'));
+    document.querySelectorAll('.inlineblank').forEach(e=>e.classList.remove('correct','wrong'));
+  }
+}
+document.getElementById('teacher').addEventListener('change',e=>{TEACHER=e.target.checked;render();});
+
+/* ---------------- SVG SCENES ---------------- */
+const SCENES={
+  skating:()=>`<svg class="scene" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="220" fill="#eaf3fb"/>
+    <rect y="150" width="520" height="70" fill="#cfe6f7"/>
+    <ellipse cx="260" cy="175" rx="210" ry="34" fill="#dff1fb" stroke="#9cc6e6"/>
+    <rect x="40" y="70" width="110" height="60" rx="6" fill="#fff" stroke="#c9d8ea"/>
+    <path d="M40 70 h110 l-10 -16 h-90 z" fill="#d94a4a"/><path d="M60 54 h12 v16 h-12z" fill="#fff"/>
+    <text x="95" y="105" font-size="11" text-anchor="middle" fill="#2f6aa8">Warming Hut</text>
+    <rect x="370" y="70" width="110" height="60" rx="6" fill="#fff" stroke="#c9d8ea"/>
+    <path d="M370 70 h110 l-10 -16 h-90 z" fill="#2f6aa8"/>
+    <text x="425" y="105" font-size="11" text-anchor="middle" fill="#2f6aa8">Pavilion</text>
+    <g stroke="#1f4e79" stroke-width="2" fill="none">
+      <circle cx="210" cy="150" r="7" fill="#f6c45a" stroke="none"/><line x1="210" y1="157" x2="210" y2="175"/>
+      <line x1="210" y1="175" x2="200" y2="190"/><line x1="210" y1="175" x2="222" y2="188"/>
+      <line x1="210" y1="162" x2="196" y2="168"/><line x1="210" y1="162" x2="224" y2="158"/></g>
+    <g stroke="#16a085" stroke-width="2" fill="none">
+      <circle cx="300" cy="150" r="7" fill="#f6c45a" stroke="none"/><line x1="300" y1="157" x2="300" y2="175"/>
+      <line x1="300" y1="175" x2="290" y2="190"/><line x1="300" y1="175" x2="312" y2="188"/>
+      <line x1="300" y1="162" x2="286" y2="170"/><line x1="300" y1="162" x2="314" y2="166"/></g>
+    <text x="260" y="30" font-size="15" text-anchor="middle" fill="#1f4e79" font-weight="bold">⛸ Winter Skating Festival</text>
+  </svg>`,
+  market:()=>`<svg class="scene" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="260" fill="#eef7ee"/><rect y="195" width="520" height="65" fill="#d7c7a8"/>
+    <!-- stalls -->
+    ${stall(30,70,'#d94a4a')}${stall(190,70,'#3b8f6a')}${stall(350,70,'#e0a93b')}
+    <!-- vendor weighing (left) -->
+    ${person(70,150,'#2f6aa8')}<rect x="95" y="150" width="26" height="8" fill="#8a6d3b"/><circle cx="108" cy="145" r="5" fill="#bbb"/>
+    <!-- woman + child (centre) -->
+    ${person(235,150,'#b84a8a')}${person(258,165,'#e0a93b',0.8)}
+    <!-- guitar man (right) -->
+    ${person(395,158,'#555')}<path d="M408 162 q10 4 6 16" stroke="#8a5a2b" stroke-width="4" fill="none"/>
+    <rect x="392" y="188" width="30" height="8" rx="2" fill="#6b4a2b"/>
+    <!-- dog -->
+    <g transform="translate(150,200)"><ellipse cx="10" cy="6" rx="12" ry="6" fill="#8a5a2b"/>
+      <circle cx="21" cy="2" r="5" fill="#8a5a2b"/><line x1="4" y1="10" x2="4" y2="16" stroke="#6b4a2b" stroke-width="2"/>
+      <line x1="16" y1="10" x2="16" y2="16" stroke="#6b4a2b" stroke-width="2"/></g>
+    <!-- flowers foreground -->
+    <g transform="translate(40,205)">${[0,16,32].map(x=>`<circle cx="${x}" cy="10" r="6" fill="#f6c45a"/><circle cx="${x}" cy="10" r="2.5" fill="#b8702a"/>`).join('')}</g>
+    <g transform="translate(440,205)">${[0,16,32].map(x=>`<circle cx="${x}" cy="10" r="6" fill="#e06a8a"/>`).join('')}</g>
+    <text x="260" y="26" font-size="14" text-anchor="middle" fill="#1f4e79" font-weight="bold">🧺 Farmers' Market — sunny morning</text>
+  </svg>`,
+  market_predict:()=>`<svg class="scene" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="260" fill="#dfe5ea"/><rect y="195" width="520" height="65" fill="#c6b89c"/>
+    <!-- dark clouds -->
+    <g fill="#9aa6b2">${[80,180,300,420].map(x=>`<ellipse cx="${x}" cy="40" rx="55" ry="22"/>`).join('')}</g>
+    <g fill="#7d8a97">${[130,250,370].map(x=>`<ellipse cx="${x}" cy="52" rx="48" ry="18"/>`).join('')}</g>
+    ${stall(30,75,'#b84040')}${stall(190,75,'#2f6a52')}${stall(350,75,'#b78a2f')}
+    <!-- flapping awning + blowing paper -->
+    <path d="M190 75 q-14 -10 -26 -2" stroke="#2f6a52" stroke-width="3" fill="none"/>
+    <path d="M270 120 q8 -8 18 -4" stroke="#fff" stroke-width="3" fill="none"/>
+    <path d="M300 110 q8 -8 18 -4" stroke="#eee" stroke-width="3" fill="none"/>
+    ${person(70,155,'#2f6aa8')}${person(235,155,'#b84a8a')}${person(258,168,'#e0a93b',0.8)}${person(395,160,'#555')}
+    <!-- people glancing up: small ! marks -->
+    <text x="70" y="140" font-size="13" text-anchor="middle" fill="#c0392b">!</text>
+    <text x="395" y="145" font-size="13" text-anchor="middle" fill="#c0392b">!</text>
+    <!-- wind lines -->
+    <g stroke="#6b7785" stroke-width="2" fill="none" opacity="0.6">
+      <path d="M20 130 q30 -6 60 0"/><path d="M20 150 q40 -6 80 0"/><path d="M430 135 q30 -6 60 0"/></g>
+    <text x="260" y="24" font-size="14" text-anchor="middle" fill="#1f4e79" font-weight="bold">⛈ A few moments later — a storm rolls in</text>
+  </svg>`,
+  unusual:()=>`<svg class="scene" viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg">
+    <rect width="520" height="250" fill="#e7f4e7"/><rect y="185" width="520" height="65" fill="#bfe0a8"/>
+    <path d="M0 185 q260 -30 520 0" fill="#d8efc8"/>
+    <!-- path -->
+    <path d="M60 250 Q260 150 470 250" fill="#cdbfa0" opacity="0.7"/>
+    <!-- businessman -->
+    <g transform="translate(200,120)">
+      <circle cx="0" cy="0" r="10" fill="#e8c39e"/><rect x="-10" y="10" width="20" height="34" rx="4" fill="#3a4654"/>
+      <rect x="-3" y="12" width="6" height="22" fill="#c0392b"/>
+      <line x1="-6" y1="44" x2="-9" y2="66" stroke="#2a3340" stroke-width="5"/>
+      <line x1="6" y1="44" x2="9" y2="66" stroke="#2a3340" stroke-width="5"/>
+      <line x1="10" y1="22" x2="30" y2="34" stroke="#3a4654" stroke-width="5"/></g>
+    <!-- leash -->
+    <line x1="230" y1="154" x2="285" y2="176" stroke="#555" stroke-width="2"/>
+    <!-- pig in red sweater -->
+    <g transform="translate(285,165)">
+      <ellipse cx="18" cy="14" rx="26" ry="15" fill="#f3b0c4"/>
+      <rect x="0" y="4" width="30" height="20" rx="7" fill="#c0392b" opacity="0.85"/>
+      <circle cx="42" cy="10" r="10" fill="#f3b0c4"/><ellipse cx="46" cy="10" rx="4" ry="5" fill="#e08aa0"/>
+      <circle cx="44" cy="7" r="1.3" fill="#333"/><path d="M36 2 l4 -6 2 6z" fill="#f3b0c4"/>
+      <line x1="6" y1="28" x2="6" y2="40" stroke="#e08aa0" stroke-width="4"/>
+      <line x1="30" y1="28" x2="30" y2="40" stroke="#e08aa0" stroke-width="4"/>
+      <path d="M-6 14 q-8 2 -4 8" stroke="#e08aa0" stroke-width="3" fill="none"/></g>
+    <!-- joggers staring -->
+    ${person(110,150,'#2f6aa8',0.9)}${person(135,150,'#16a085',0.9)}
+    <text x="122" y="135" font-size="14" text-anchor="middle" fill="#c0392b">!?</text>
+    <!-- child pointing -->
+    ${person(410,160,'#e0a93b',0.75)}<line x1="402" y1="168" x2="380" y2="172" stroke="#e0a93b" stroke-width="3"/>
+    <text x="410" y="148" font-size="12" text-anchor="middle" fill="#b7791f">ha!</text>
+    <text x="260" y="24" font-size="14" text-anchor="middle" fill="#1f4e79" font-weight="bold">🐷 An unusual sight in the park</text>
+  </svg>`,
+};
+function stall(x,y,color){return `<g transform="translate(${x},${y})">
+  <rect x="0" y="20" width="140" height="60" fill="#f3ead6" stroke="#cbb998"/>
+  <rect x="-6" y="8" width="152" height="16" fill="${color}"/>
+  <path d="M-6 24 h152 v6 l-10 8 h-10 l-10 -8 h-12 l-10 8 h-10 l-10 -8 h-12 l-10 8 h-10 l-10 -8 h-12 z" fill="${color}" opacity="0.5"/>
+  <line x1="4" y1="24" x2="4" y2="80" stroke="#b7a37d" stroke-width="3"/>
+  <line x1="136" y1="24" x2="136" y2="80" stroke="#b7a37d" stroke-width="3"/>
+  ${[20,55,90,115].map(bx=>`<rect x="${bx}" y="58" width="22" height="16" rx="3" fill="#cf7a3a"/>`).join('')}</g>`;}
+function person(x,y,color,s){s=s||1;return `<g transform="translate(${x},${y}) scale(${s})">
+  <circle cx="0" cy="0" r="8" fill="#e8c39e"/><rect x="-9" y="8" width="18" height="26" rx="5" fill="${color}"/>
+  <line x1="-5" y1="34" x2="-7" y2="52" stroke="#3a4654" stroke-width="4"/>
+  <line x1="5" y1="34" x2="7" y2="52" stroke="#3a4654" stroke-width="4"/></g>`;}
+
+/* init */
+buildNav();render();
+</script>
+</body>
+</html>
